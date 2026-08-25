@@ -83,13 +83,11 @@ const Login = () => {
             Pas encore de compte ? <Link to="/inscription">Créer un compte</Link>
           </p>
 
-          {import.meta.env.DEV && (
+          {import.meta.env.DEV && import.meta.env.VITE_DEMO_ADMIN && (
             <div className="demo-box">
-              <strong>Comptes de démonstration</strong>
+              <strong>Compte administrateur</strong>
               <br />
-              Admin : {import.meta.env.VITE_DEMO_ADMIN || 'admin@beninshop.bj / admin123'}
-              <br />
-              Client : {import.meta.env.VITE_DEMO_CLIENT || 'client@beninshop.bj / client123'}
+              {import.meta.env.VITE_DEMO_ADMIN}
             </div>
           )}
         </div>

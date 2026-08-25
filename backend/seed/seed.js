@@ -6,62 +6,49 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 const products = require('./products');
 
-// Comptes crees au seed, definis dans le .env
-const users = [
-  {
-    name: process.env.ADMIN_NAME || 'Admin BeninShop',
-    email: process.env.ADMIN_EMAIL || 'admin@beninshop.bj',
-    password: process.env.ADMIN_PASSWORD || 'admin123',
-    role: 'admin',
-  },
-  {
-    name: process.env.CLIENT_NAME || 'Client Test',
-    email: process.env.CLIENT_EMAIL || 'client@beninshop.bj',
-    password: process.env.CLIENT_PASSWORD || 'client123',
-    role: 'user',
-  },
-];
+// Aucun identifiant dans le code : tout vient du .env
+const requireEnv = (key) => {
+  const value = process.env[key];
+
+  if (!value) {
+    console.error(`Variable ${key} absente du fichier .env (voir .env.example)`);
+    process.exit(1);
+  }
+
+  return value;
+};
+
+// Seul l'administrateur est cree ici, les clients s'inscrivent depuis le site
+const admin = {
+  name: requireEnv('ADMIN_NAME'),
+  email: requireEnv('ADMIN_EMAIL'),
+  password: requireEnv('ADMIN_PASSWORD'),
+  role: 'admin',
+};
 
 const importData = async () => {
-  await Order.deleteMany();
+  // Le catalogue est reinitialise, les comptes clients et leurs commandes sont conserves
   await Product.deleteMany();
-  await User.deleteMany();
-
-  const createdUsers = await User.create(users);
   const createdProducts = await Product.insertMany(products);
 
-// Commandes de demo
-  const client = createdUsers.find((u) => u.role === 'user');
-  const sampleOrders = [
-    [createdProducts[0], 1],
-    [createdProducts[4], 1],
-    [createdProducts[2], 2],
-  ].map(([product, quantity]) => ({
-    user: client._id,
-    items: [
-      {
-        product: product._id,
-        name: product.name,
-        image: product.image,
-        price: product.price,
-        quantity,
-      },
-    ],
-    total: product.price * quantity,
-    shippingAddress: {
-      fullName: client.name,
-      phone: '+229 01 23 45 67 89',
-      city: 'Cotonou',
-      address: 'Quartier Fidjrosse',
-    },
-    status: 'payée',
-  }));
+  // L'admin doit exister en base, sinon la connexion est impossible
+  let user = await User.findOne({ email: admin.email });
 
-  await Order.insertMany(sampleOrders);
+  if (user) {
+    user.name = admin.name;
+    user.password = admin.password;
+    user.role = 'admin';
+  } else {
+    user = new User(admin);
+  }
 
-  console.log(`${createdProducts.length} produits, ${createdUsers.length} utilisateurs et ${sampleOrders.length} commandes insérées.`);
-  console.log(`Compte admin  : ${users[0].email}`);
-  console.log(`Compte client : ${users[1].email}`);
+  await user.save();
+
+  const clients = await User.countDocuments({ role: 'user' });
+
+  console.log(`${createdProducts.length} produits insérés.`);
+  console.log(`Administrateur enregistré en base : ${admin.email}`);
+  console.log(`${clients} compte(s) client conservé(s).`);
 };
 
 const destroyData = async () => {
