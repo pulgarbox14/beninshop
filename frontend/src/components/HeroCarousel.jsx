@@ -48,6 +48,17 @@ const HeroCarousel = () => {
 
   return (
     <section className="hero" aria-label="Mises en avant">
+      {/* Decoupe courbe de la zone jaune */}
+      <svg className="hero-clip" aria-hidden="true">
+        <defs>
+          <clipPath id="hero-curve" clipPathUnits="objectBoundingBox">
+            <path d="M0.24 0 H1 V1 H0 C0.04 0.72 0.11 0.33 0.24 0 Z" />
+          </clipPath>
+          <clipPath id="hero-curve-mobile" clipPathUnits="objectBoundingBox">
+            <path d="M0 0.16 C0.32 0.02 0.7 0.02 1 0.12 V1 H0 Z" />
+          </clipPath>
+        </defs>
+      </svg>
       <div className="hero-slide" key={index}>
         <div className="hero-content">
           <h1>

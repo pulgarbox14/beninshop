@@ -52,9 +52,15 @@
   align-self: stretch;
   display: grid;
   place-items: center;
-  padding: 30px 40px 30px 110px;
+  padding: 34px 40px 30px 150px;
   background: linear-gradient(155deg, var(--yellow) 0%, var(--yellow-dark) 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+  clip-path: url(#hero-curve);
+}
+
+.hero-clip {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
 .hero-visual img {

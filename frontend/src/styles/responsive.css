@@ -133,7 +133,7 @@
   .hero-visual {
     max-height: 280px;
     padding: 24px 24px 26px;
-    clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+    clip-path: url(#hero-curve-mobile);
   }
 
   .hero-arrow {
