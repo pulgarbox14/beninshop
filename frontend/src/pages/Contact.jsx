@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Alert from '../components/Alert';
 import { IconClock, IconMail, IconMapPin, IconPhone } from '../components/Icons';
 
-/** Formulaire de contact et coordonnees de la boutique */
+// Contact
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);

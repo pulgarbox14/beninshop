@@ -47,7 +47,6 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // Date de creation (exigee par le sujet) : fournie par timestamps -> createdAt
   },
   { timestamps: true }
 );

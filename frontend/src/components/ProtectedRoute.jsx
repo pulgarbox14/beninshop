@@ -2,10 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Loader from './Loader';
 
-/**
- * Protege les routes privees.
- * adminOnly = true : reserve aux administrateurs (tableau de bord).
- */
+// Route privee, adminOnly pour le tableau de bord
 const ProtectedRoute = ({ adminOnly = false }) => {
   const { isAuthenticated, isAdmin, loading } = useAuth();
   const location = useLocation();

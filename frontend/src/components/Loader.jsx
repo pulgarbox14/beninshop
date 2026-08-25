@@ -1,4 +1,4 @@
-/** Indicateur de chargement */
+// Chargement
 const Loader = ({ text = 'Chargement en cours...' }) => (
   <div className="loader-wrap">
     <span className="loader" />

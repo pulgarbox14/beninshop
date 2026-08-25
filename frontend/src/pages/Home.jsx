@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import { IconArrowRight } from '../components/Icons';
 
-/** Page d'accueil : banniere, produits et services */
+// Page d'accueil
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,6 +1,6 @@
 import { IconMapPin, IconPhone, IconTruck } from './Icons';
 
-/** Bandeau d'informations affiche au-dessus de la navigation */
+// Bandeau du haut
 const TopBar = () => (
   <div className="topbar">
     <div className="container topbar-inner">

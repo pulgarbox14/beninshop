@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchCategories } from '../services/productService';
 import { IconCheck } from '../components/Icons';
 
-/** Presentation de la boutique */
+// A propos
 const About = () => {
   const [categories, setCategories] = useState([]);
 

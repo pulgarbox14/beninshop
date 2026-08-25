@@ -1,24 +1,24 @@
 import api from './api';
 
-/** Inscription */
+// Inscription
 export const register = async (payload) => {
   const { data } = await api.post('/auth/register', payload);
   return data;
 };
 
-/** Connexion : renvoie l'utilisateur et son JWT */
+// Connexion
 export const login = async (payload) => {
   const { data } = await api.post('/auth/login', payload);
   return data;
 };
 
-/** Profil de l'utilisateur connecte */
+// Profil
 export const fetchProfile = async () => {
   const { data } = await api.get('/auth/me');
   return data;
 };
 
-/** Liste des utilisateurs (admin) */
+// Utilisateurs (admin)
 export const fetchUsers = async () => {
   const { data } = await api.get('/auth/users');
   return data;

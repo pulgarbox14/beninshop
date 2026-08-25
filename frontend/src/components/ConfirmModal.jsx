@@ -1,6 +1,6 @@
 import { IconAlert } from './Icons';
 
-/** Fenetre de confirmation avant une suppression */
+// Confirmation de suppression
 const ConfirmModal = ({ title, message, confirmLabel = 'Supprimer', onConfirm, onCancel }) => (
   <div className="modal-backdrop" role="dialog" aria-modal="true">
     <div className="modal">

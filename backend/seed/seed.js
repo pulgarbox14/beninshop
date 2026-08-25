@@ -16,11 +16,10 @@ const importData = async () => {
   await Product.deleteMany();
   await User.deleteMany();
 
-  // create() declenche le hook bcrypt du modele User
   const createdUsers = await User.create(users);
   const createdProducts = await Product.insertMany(products);
 
-  // Quelques commandes pour alimenter le tableau de bord
+// Commandes de demo
   const client = createdUsers.find((u) => u.role === 'user');
   const sampleOrders = [
     [createdProducts[0], 1],

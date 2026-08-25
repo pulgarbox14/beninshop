@@ -10,7 +10,7 @@ import { IconEdit, IconPlus, IconSearch, IconTrash } from '../../components/Icon
 
 const PER_PAGE = 8;
 
-/** Gestion complete des produits (recherche + pagination) */
+// Gestion des produits
 const AdminProducts = () => {
   const [data, setData] = useState({ products: [], pages: 1, page: 1, total: 0 });
   const [search, setSearch] = useState('');

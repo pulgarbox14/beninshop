@@ -1,6 +1,6 @@
 import { IconStar } from './Icons';
 
-/** Affiche une note sur 5 sous forme d'etoiles */
+// Note sur 5
 const Rating = ({ value = 0, count, size = 15 }) => (
   <div className="rating" aria-label={`Note de ${value} sur 5`}>
     {[1, 2, 3, 4, 5].map((position) => {

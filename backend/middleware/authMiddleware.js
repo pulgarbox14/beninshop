@@ -1,10 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-/**
- * Verifie le JWT envoye dans l'en-tete Authorization : "Bearer <token>".
- * Attache l'utilisateur courant a req.user.
- */
+// Verifie le token et charge l'utilisateur
 const protect = async (req, res, next) => {
   const header = req.headers.authorization || '';
 
@@ -28,9 +25,7 @@ const protect = async (req, res, next) => {
   }
 };
 
-/**
- * Restreint l'acces aux administrateurs (routes du tableau de bord).
- */
+// Reserve aux admins
 const admin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') return next();
   return res.status(403).json({ message: 'Accès réservé aux administrateurs' });

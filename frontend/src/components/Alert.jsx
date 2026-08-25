@@ -1,4 +1,4 @@
-/** Message de succes, d'erreur ou d'information */
+// Message d'alerte
 const Alert = ({ type = 'info', children }) => {
   if (!children) return null;
 

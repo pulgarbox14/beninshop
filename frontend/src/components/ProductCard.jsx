@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { formatPrice } from '../utils';
 import Rating from './Rating';
 
-/** Carte produit reutilisee sur l'accueil et dans le catalogue */
+// Carte produit
 const ProductCard = ({ product, showRating = false }) => {
   const outOfStock = product.stock === 0;
 

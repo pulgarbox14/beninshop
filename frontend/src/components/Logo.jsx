@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
 
-/**
- * Logo de la boutique, affiche dans la navigation, le pied de page
- * et le tableau de bord.
- */
+// Logo de la boutique
 const Logo = ({ to = '/', tagline = 'Votre boutique en ligne', light = false, size = 46 }) => (
   <Link to={to} className="brand">
     <img src="/logo.svg" alt="BeninShop" className="brand-logo" width={size} height={size} />

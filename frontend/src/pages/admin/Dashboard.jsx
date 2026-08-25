@@ -19,7 +19,7 @@ import {
 
 const PER_PAGE = 8;
 
-/** Tableau de bord : statistiques et liste des produits */
+// Tableau de bord
 const Dashboard = () => {
   const [stats, setStats] = useState({ products: 0, orders: 0, users: 0, revenue: 0 });
   const [data, setData] = useState({ products: [], pages: 1, page: 1, total: 0 });

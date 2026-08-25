@@ -4,10 +4,7 @@ const CartContext = createContext(null);
 
 const STORAGE_KEY = 'beninshop_cart';
 
-/**
- * Panier de l'utilisateur, conserve dans le localStorage.
- * Chaque ligne contient le produit renvoye par l'API et une quantite.
- */
+// Panier conserve dans le localStorage
 export const CartProvider = ({ children }) => {
   const [items, setItems] = useState(() => {
     try {

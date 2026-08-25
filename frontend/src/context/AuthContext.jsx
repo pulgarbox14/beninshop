@@ -5,9 +5,7 @@ const AuthContext = createContext(null);
 
 const STORAGE_KEY = 'beninshop_user';
 
-/**
- * Gere l'utilisateur connecte et son JWT (conserve dans le localStorage).
- */
+// Utilisateur connecte + JWT
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

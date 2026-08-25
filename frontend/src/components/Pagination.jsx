@@ -1,6 +1,6 @@
 import { IconArrowLeft, IconArrowRight } from './Icons';
 
-/** Pagination simple utilisee dans le catalogue et le tableau de bord */
+// Pagination
 const Pagination = ({ page, pages, onChange }) => {
   if (!pages || pages <= 1) return null;
 

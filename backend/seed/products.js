@@ -1,6 +1,4 @@
-/**
- * Jeu de donnees de depart : les 8 produits demandes par le sujet.
- */
+// Produits de depart
 module.exports = [
   {
     name: 'Ordinateur HP',

@@ -20,7 +20,7 @@ const emptyProduct = {
   featured: false,
 };
 
-/** Formulaire d'ajout et de modification d'un produit */
+// Ajout / modification d'un produit
 const ProductForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();

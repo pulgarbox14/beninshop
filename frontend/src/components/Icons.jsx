@@ -1,7 +1,4 @@
-/**
- * Jeu d'icones SVG utilise dans toute l'application.
- * Chaque icone accepte une taille et herite de la couleur du texte.
- */
+// Icones SVG de l'application
 const base = (size) => ({
   width: size,
   height: size,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-/** Remonte en haut de page a chaque changement de route */
+// Remonte en haut a chaque page
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 

@@ -3,11 +3,7 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 const asyncHandler = require('../middleware/asyncHandler');
 
-/**
- * @desc    Statistiques du tableau de bord administrateur
- * @route   GET /api/stats
- * @access  Admin
- */
+// GET /api/stats (admin)
 const getStats = asyncHandler(async (req, res) => {
   const [productCount, userCount, orderCount, revenue] = await Promise.all([
     Product.countDocuments(),

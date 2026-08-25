@@ -1,6 +1,4 @@
-/* =========================================================
-   Variables globales et remise a zero
-   ========================================================= */
+/* Variables globales et remise a zero */
 :root {
   --navy: #0f2557;
   --navy-dark: #0b1d45;
@@ -100,7 +98,7 @@ h4 {
   color: var(--navy);
 }
 
-/* ---------- Utilitaires ---------- */
+/* Utilitaires */
 .container {
   width: 100%;
   max-width: var(--container);

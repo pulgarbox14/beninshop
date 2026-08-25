@@ -27,7 +27,7 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminSettings from './pages/admin/AdminSettings';
 
-/** Routage de l'application (React Router) */
+// Routes de l'application
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
@@ -35,7 +35,7 @@ const App = () => (
         <ScrollToTop />
 
         <Routes>
-          {/* Partie boutique */}
+          {/* Boutique */}
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/produits" element={<Products />} />
@@ -47,7 +47,7 @@ const App = () => (
             <Route path="/connexion" element={<Login />} />
             <Route path="/inscription" element={<Register />} />
 
-            {/* Routes reservees aux utilisateurs connectes */}
+            {/* Routes connectees */}
             <Route element={<ProtectedRoute />}>
               <Route path="/commande" element={<Checkout />} />
               <Route path="/mes-commandes" element={<MyOrders />} />
@@ -56,7 +56,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Route>
 
-          {/* Tableau de bord : reserve aux administrateurs (JWT + role) */}
+          {/* Tableau de bord admin */}
           <Route element={<ProtectedRoute adminOnly />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
