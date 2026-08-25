@@ -1,0 +1,153 @@
+/* =========================================================
+   Variables globales et remise a zero
+   ========================================================= */
+:root {
+  --navy: #0f2557;
+  --navy-dark: #0b1d45;
+  --navy-light: #1b3a7a;
+  --yellow: #fbbf24;
+  --yellow-dark: #f59e0b;
+  --yellow-soft: #fef3c7;
+
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+
+  --bg: #ffffff;
+  --bg-soft: #f8fafc;
+  --bg-gray: #f3f4f6;
+  --border: #e5e7eb;
+
+  --green: #16a34a;
+  --green-soft: #dcfce7;
+  --red: #dc2626;
+  --red-soft: #fee2e2;
+  --blue: #2563eb;
+  --purple: #7c3aed;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+
+  --shadow-sm: 0 1px 3px rgba(15, 37, 87, 0.08);
+  --shadow: 0 4px 16px rgba(15, 37, 87, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 37, 87, 0.14);
+
+  --container: 1440px;
+  --header-height: 88px;
+  --transition: 0.2s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* ---------- Utilitaires ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 48px 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--navy);
+  transition: gap var(--transition), color var(--transition);
+}
+
+.link-more:hover {
+  gap: 12px;
+  color: var(--yellow-dark);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
