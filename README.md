@@ -101,7 +101,18 @@ MONGO_URI=mongodb://127.0.0.1:27017/mini_ecommerce
 JWT_SECRET=beninshop_secret_key_a_changer
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
+
+# Comptes créés par le seed
+ADMIN_NAME=Admin BeninShop
+ADMIN_EMAIL=admin@beninshop.bj
+ADMIN_PASSWORD=admin123
+CLIENT_NAME=Client Test
+CLIENT_EMAIL=client@beninshop.bj
+CLIENT_PASSWORD=client123
 ```
+
+Le fichier `.env` n'est jamais versionné (`.gitignore`), seul `.env.example` l'est.
+Changer `JWT_SECRET` et les mots de passe avant toute mise en ligne.
 
 ### 2. Frontend
 
@@ -139,12 +150,15 @@ Scripts utiles :
 
 ## Comptes de démonstration
 
-Créés par `npm run seed` :
+Créés par `npm run seed` à partir des variables du `.env` :
 
 | Rôle | Email | Mot de passe |
 | --- | --- | --- |
 | Administrateur | `admin@beninshop.bj` | `admin123` |
 | Client | `client@beninshop.bj` | `client123` |
+
+Ces identifiants sont rappelés sur la page de connexion **en mode développement
+uniquement** (`npm run dev`). Le build de production ne les affiche pas.
 
 ---
 

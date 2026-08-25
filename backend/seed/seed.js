@@ -6,9 +6,20 @@ const User = require('../models/User');
 const Order = require('../models/Order');
 const products = require('./products');
 
+// Comptes crees au seed, definis dans le .env
 const users = [
-  { name: 'Admin BeninShop', email: 'admin@beninshop.bj', password: 'admin123', role: 'admin' },
-  { name: 'Client Test', email: 'client@beninshop.bj', password: 'client123', role: 'user' },
+  {
+    name: process.env.ADMIN_NAME || 'Admin BeninShop',
+    email: process.env.ADMIN_EMAIL || 'admin@beninshop.bj',
+    password: process.env.ADMIN_PASSWORD || 'admin123',
+    role: 'admin',
+  },
+  {
+    name: process.env.CLIENT_NAME || 'Client Test',
+    email: process.env.CLIENT_EMAIL || 'client@beninshop.bj',
+    password: process.env.CLIENT_PASSWORD || 'client123',
+    role: 'user',
+  },
 ];
 
 const importData = async () => {
@@ -49,8 +60,8 @@ const importData = async () => {
   await Order.insertMany(sampleOrders);
 
   console.log(`${createdProducts.length} produits, ${createdUsers.length} utilisateurs et ${sampleOrders.length} commandes insérées.`);
-  console.log('Compte admin  : admin@beninshop.bj / admin123');
-  console.log('Compte client : client@beninshop.bj / client123');
+  console.log(`Compte admin  : ${users[0].email}`);
+  console.log(`Compte client : ${users[1].email}`);
 };
 
 const destroyData = async () => {
