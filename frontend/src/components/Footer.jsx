@@ -125,7 +125,16 @@ const Footer = () => (
       <div className="footer-bottom">
         <span>&copy; {new Date().getFullYear()} BeninShop. Tous droits réservés.</span>
         <span>
-          Conçu avec <span className="heart">&hearts;</span> au Bénin
+          Conçu par{' '}
+          <a
+            className="author-link"
+            href="https://pascalcarmel.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Pascal Carmel GUEZO
+          </a>{' '}
+          — Développeur Fullstack
         </span>
       </div>
     </div>
