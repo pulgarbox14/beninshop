@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-/** Page affichee pour une adresse inconnue */
+// Page 404
 const NotFound = () => (
   <div className="container not-found">
     <h1>404</h1>

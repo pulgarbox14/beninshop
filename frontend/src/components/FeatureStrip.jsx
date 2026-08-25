@@ -23,7 +23,7 @@ const features = [
   },
 ];
 
-/** Bandeau des services de la boutique */
+// Bandeau des services
 const FeatureStrip = () => (
   <div className="features">
     {features.map((feature) => (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IconMail } from './Icons';
 
-/** Bloc d'inscription a la newsletter */
+// Newsletter
 const Newsletter = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');

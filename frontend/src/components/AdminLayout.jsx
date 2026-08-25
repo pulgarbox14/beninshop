@@ -34,7 +34,7 @@ const titles = {
   '/admin/parametres': 'Paramètres',
 };
 
-/** Gabarit du tableau de bord : menu lateral + barre superieure */
+// Gabarit du tableau de bord
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();

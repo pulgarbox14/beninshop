@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/AuthContext';
 import { formatDate } from '../../utils';
 
-/** Informations sur le compte administrateur et la boutique */
+// Parametres
 const AdminSettings = () => {
   const { user } = useAuth();
 

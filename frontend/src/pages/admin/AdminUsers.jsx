@@ -4,7 +4,7 @@ import { formatDate, getInitials } from '../../utils';
 import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 
-/** Liste des utilisateurs inscrits */
+// Utilisateurs
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);

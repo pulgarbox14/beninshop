@@ -2,11 +2,7 @@ const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const asyncHandler = require('../middleware/asyncHandler');
 
-/**
- * @desc    Inscription d'un utilisateur
- * @route   POST /api/auth/register
- * @access  Public
- */
+// POST /api/auth/register
 const register = asyncHandler(async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -21,7 +17,7 @@ const register = asyncHandler(async (req, res) => {
     throw new Error('Un compte existe déjà avec cet email');
   }
 
-  // Le mot de passe est chiffre avec bcrypt dans le hook pre('save') du modele
+  // bcrypt gere le hash dans le modele
   const user = await User.create({
     name,
     email,
@@ -38,11 +34,7 @@ const register = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc    Connexion : verifie le mot de passe et renvoie un JWT
- * @route   POST /api/auth/login
- * @access  Public
- */
+// POST /api/auth/login
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -67,11 +59,7 @@ const login = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc    Profil de l'utilisateur connecte
- * @route   GET /api/auth/me
- * @access  Prive (JWT)
- */
+// GET /api/auth/me
 const getMe = asyncHandler(async (req, res) => {
   res.json({
     _id: req.user._id,
@@ -82,11 +70,7 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc    Liste des utilisateurs (tableau de bord)
- * @route   GET /api/auth/users
- * @access  Admin
- */
+// GET /api/auth/users (admin)
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().sort({ createdAt: -1 });
   res.json(users);

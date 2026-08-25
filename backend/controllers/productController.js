@@ -1,11 +1,7 @@
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/asyncHandler');
 
-/**
- * @desc    Liste des produits (filtres : recherche, categorie, tri, pagination)
- * @route   GET /api/products
- * @access  Public
- */
+// GET /api/products
 const getProducts = asyncHandler(async (req, res) => {
   const { search, category, sort, limit, page, featured } = req.query;
 
@@ -53,11 +49,7 @@ const getProducts = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc    Detail d'un produit
- * @route   GET /api/products/:id
- * @access  Public
- */
+// GET /api/products/:id
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -69,11 +61,7 @@ const getProductById = asyncHandler(async (req, res) => {
   res.json(product);
 });
 
-/**
- * @desc    Creation d'un produit
- * @route   POST /api/products
- * @access  Admin
- */
+// POST /api/products (admin)
 const createProduct = asyncHandler(async (req, res) => {
   const { name, description, price, image, category, stock, featured } = req.body;
 
@@ -90,11 +78,7 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(product);
 });
 
-/**
- * @desc    Mise a jour d'un produit
- * @route   PUT /api/products/:id
- * @access  Admin
- */
+// PUT /api/products/:id (admin)
 const updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -114,11 +98,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   res.json(updated);
 });
 
-/**
- * @desc    Suppression d'un produit
- * @route   DELETE /api/products/:id
- * @access  Admin
- */
+// DELETE /api/products/:id (admin)
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -131,11 +111,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   res.json({ message: 'Produit supprimé avec succès', _id: req.params.id });
 });
 
-/**
- * @desc    Liste des categories avec le nombre de produits
- * @route   GET /api/products/categories/all
- * @access  Public
- */
+// GET /api/products/categories/all
 const getCategories = asyncHandler(async (req, res) => {
   const categories = await Product.aggregate([
     { $group: { _id: '$category', count: { $sum: 1 } } },

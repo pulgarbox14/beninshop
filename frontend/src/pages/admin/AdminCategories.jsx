@@ -5,7 +5,7 @@ import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 import { IconTag } from '../../components/Icons';
 
-/** Categories du catalogue, calculees a partir des produits */
+// Categories du catalogue
 const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);

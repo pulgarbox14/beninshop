@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 
-/**
- * Connexion a la base MongoDB "mini_ecommerce" via Mongoose.
- * L'URI est lue depuis la variable d'environnement MONGO_URI.
- */
+// Connexion a MongoDB
 const connectDB = async () => {
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mini_ecommerce';
 

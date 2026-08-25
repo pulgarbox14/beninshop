@@ -35,7 +35,7 @@ const paiements = [
   { src: '/images/paiement/mtn-momo.svg', alt: 'MTN Mobile Money' },
 ];
 
-/** Pied de page de la boutique */
+// Pied de page
 const Footer = () => (
   <footer className="footer">
     <div className="container">

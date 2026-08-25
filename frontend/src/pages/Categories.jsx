@@ -5,7 +5,7 @@ import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import { IconTag } from '../components/Icons';
 
-/** Liste des categories issues de l'API */
+// Categories
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);

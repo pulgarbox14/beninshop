@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 
 const PER_PAGE = 8;
 
-/** Catalogue : recherche, filtres par categorie, tri et pagination */
+// Catalogue
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState({ products: [], total: 0, pages: 1, page: 1 });

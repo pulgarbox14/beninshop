@@ -1,15 +1,12 @@
 import axios from 'axios';
 
-/**
- * Instance Axios centralisee : toutes les requetes du frontend passent par ici.
- * L'URL de base vient de VITE_API_URL, sinon on utilise le proxy Vite (/api).
- */
+// Instance Axios utilisee dans toute l'application
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Ajout automatique du JWT sur chaque requete
+// Ajoute le JWT
 api.interceptors.request.use((config) => {
   const stored = localStorage.getItem('beninshop_user');
 
@@ -25,7 +22,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Normalisation des erreurs : on renvoie toujours un message lisible
+// Message d'erreur lisible
 api.interceptors.response.use(
   (response) => response,
   (error) => {

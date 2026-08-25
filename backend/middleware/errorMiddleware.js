@@ -1,15 +1,11 @@
-/**
- * Route inconnue -> 404
- */
+// Route inconnue
 const notFound = (req, res, next) => {
   const error = new Error(`Route introuvable : ${req.originalUrl}`);
   res.status(404);
   next(error);
 };
 
-/**
- * Gestionnaire d'erreurs centralise : renvoie toujours du JSON au frontend.
- */
+// Gestion des erreurs
 const errorHandler = (err, req, res, next) => { // eslint-disable-line no-unused-vars
   let statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
   let message = err.message || 'Erreur serveur';

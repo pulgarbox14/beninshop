@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Chiffrement du mot de passe avec bcrypt avant chaque enregistrement
+// Hash du mot de passe
 userSchema.pre('save', async function hashPassword(next) {
   if (!this.isModified('password')) return next();
 
@@ -41,7 +41,7 @@ userSchema.pre('save', async function hashPassword(next) {
   return next();
 });
 
-// Comparaison du mot de passe saisi avec le hash stocke
+// Compare le mot de passe saisi
 userSchema.methods.matchPassword = function matchPassword(enteredPassword) {
   return bcrypt.compare(enteredPassword, this.password);
 };

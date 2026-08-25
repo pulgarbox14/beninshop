@@ -9,7 +9,7 @@ import Rating from '../components/Rating';
 import ProductCard from '../components/ProductCard';
 import { IconCart, IconCheck, IconMinus, IconPlus, IconShield, IconTruck } from '../components/Icons';
 
-/** Fiche detaillee d'un produit */
+// Fiche produit
 const ProductDetail = () => {
   const { id } = useParams();
   const { addItem } = useCart();

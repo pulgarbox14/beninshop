@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { formatPrice } from '../utils';
 import { IconCart, IconMinus, IconPlus, IconTrash } from '../components/Icons';
 
-/** Panier : liste des produits, quantites et total */
+// Panier
 const Cart = () => {
   const { items, updateQuantity, removeItem, clearCart, totalItems, totalPrice } = useCart();
   const { isAuthenticated } = useAuth();

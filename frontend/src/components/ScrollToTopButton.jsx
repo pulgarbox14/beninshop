@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IconArrowUp } from './Icons';
 
-/** Bouton flottant de retour en haut de page */
+// Retour en haut
 const ScrollToTopButton = () => {
   const [visible, setVisible] = useState(false);
 

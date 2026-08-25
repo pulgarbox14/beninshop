@@ -14,7 +14,7 @@ const statusClass = {
   annulée: 'badge-red',
 };
 
-/** Suivi des commandes passees sur la boutique */
+// Commandes
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

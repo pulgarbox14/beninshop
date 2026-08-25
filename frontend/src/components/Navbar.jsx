@@ -23,7 +23,7 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ];
 
-/** Barre de navigation principale de la boutique */
+// Navigation principale
 const Navbar = () => {
   const [term, setTerm] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +33,7 @@ const Navbar = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const { totalItems } = useCart();
 
-  // Fermeture du menu utilisateur au clic exterieur
+  // Ferme le menu au clic exterieur
   useEffect(() => {
     const handleClick = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {

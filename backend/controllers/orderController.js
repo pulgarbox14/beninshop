@@ -2,11 +2,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/asyncHandler');
 
-/**
- * @desc    Creation d'une commande a partir du panier
- * @route   POST /api/orders
- * @access  Prive (JWT)
- */
+// POST /api/orders
 const createOrder = asyncHandler(async (req, res) => {
   const { items, shippingAddress } = req.body;
 
@@ -15,7 +11,7 @@ const createOrder = asyncHandler(async (req, res) => {
     throw new Error('Le panier est vide');
   }
 
-  // Les prix sont relus en base : on ne fait jamais confiance au panier du client
+// On relit les prix en base
   const detailedItems = await Promise.all(
     items.map(async ({ product: productId, quantity }) => {
       const product = await Product.findById(productId);
@@ -61,31 +57,19 @@ const createOrder = asyncHandler(async (req, res) => {
   res.status(201).json(order);
 });
 
-/**
- * @desc    Commandes de l'utilisateur connecte
- * @route   GET /api/orders/mine
- * @access  Prive (JWT)
- */
+// GET /api/orders/mine
 const getMyOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
   res.json(orders);
 });
 
-/**
- * @desc    Toutes les commandes (tableau de bord)
- * @route   GET /api/orders
- * @access  Admin
- */
+// GET /api/orders (admin)
 const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find().populate('user', 'name email').sort({ createdAt: -1 });
   res.json(orders);
 });
 
-/**
- * @desc    Mise a jour du statut d'une commande
- * @route   PUT /api/orders/:id
- * @access  Admin
- */
+// PUT /api/orders/:id (admin)
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 

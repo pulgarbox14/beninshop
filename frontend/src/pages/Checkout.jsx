@@ -6,7 +6,7 @@ import { createOrder } from '../services/orderService';
 import { formatPrice } from '../utils';
 import Alert from '../components/Alert';
 
-/** Validation de la commande a partir du panier */
+// Validation de la commande
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
   const { user } = useAuth();

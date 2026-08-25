@@ -1,6 +1,4 @@
-/* =========================================================
-   Tableau de bord administrateur
-   ========================================================= */
+/* Tableau de bord administrateur */
 .admin-layout {
   display: grid;
   grid-template-columns: 258px 1fr;

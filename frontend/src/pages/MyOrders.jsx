@@ -13,7 +13,7 @@ const statusClass = {
   annulée: 'badge-red',
 };
 
-/** Historique des commandes du client connecte */
+// Mes commandes
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

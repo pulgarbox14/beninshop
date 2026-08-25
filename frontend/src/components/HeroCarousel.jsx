@@ -35,7 +35,7 @@ const slides = [
   },
 ];
 
-/** Banniere d'accueil avec defilement automatique */
+// Banniere defilante
 const HeroCarousel = () => {
   const [index, setIndex] = useState(0);
 

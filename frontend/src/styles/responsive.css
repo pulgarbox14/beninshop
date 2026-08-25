@@ -1,6 +1,4 @@
-/* =========================================================
-   Adaptation aux ecrans (tablette et mobile)
-   ========================================================= */
+/* Adaptation aux ecrans (tablette et mobile) */
 @media (max-width: 1200px) {
   .footer-grid {
     grid-template-columns: repeat(3, 1fr);

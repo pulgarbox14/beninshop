@@ -1,12 +1,12 @@
-/** Formate un prix en francs CFA : 350000 -> "350 000" */
+// Prix en FCFA
 export const formatPrice = (value) =>
   new Intl.NumberFormat('fr-FR').format(Math.round(Number(value) || 0));
 
-/** Formate une date ISO -> "12/05/2024" */
+// Date au format fr
 export const formatDate = (value) =>
   value ? new Date(value).toLocaleDateString('fr-FR') : '-';
 
-/** Initiales affichees dans l'avatar */
+// Initiales de l'avatar
 export const getInitials = (name = '') =>
   name
     .split(' ')
