@@ -132,7 +132,10 @@
 
   .hero-visual {
     max-height: 280px;
-    padding: 24px 24px 26px;
+    padding: 24px 20px 26px;
+  }
+
+  .hero-visual::before {
     clip-path: url(#hero-curve-mobile);
   }
 
