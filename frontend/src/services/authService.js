@@ -18,6 +18,12 @@ export const fetchProfile = async () => {
   return data;
 };
 
+// Mise a jour du profil
+export const updateProfile = async (payload) => {
+  const { data } = await api.put('/auth/me', payload);
+  return data;
+};
+
 // Utilisateurs (admin)
 export const fetchUsers = async () => {
   const { data } = await api.get('/auth/users');

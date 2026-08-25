@@ -36,6 +36,7 @@ le catalogue depuis un tableau de bord protégé par JWT.
 - Tableau de bord : nombre de produits, commandes, utilisateurs et chiffre d'affaires
 - CRUD complet des produits (ajout, modification, suppression)
 - Consultation des catégories, des utilisateurs et des commandes
+- Modification de ses propres informations (nom, email, mot de passe)
 - Mise à jour du statut d'une commande
 
 ---
@@ -175,6 +176,7 @@ Base : `http://localhost:5000/api`
 | POST | `/auth/register` | Public | Inscription (mot de passe chiffré avec bcrypt) |
 | POST | `/auth/login` | Public | Connexion, renvoie un JWT |
 | GET | `/auth/me` | JWT | Profil de l'utilisateur connecté |
+| PUT | `/auth/me` | JWT | Modifie son nom, son email ou son mot de passe |
 | GET | `/auth/users` | Admin | Liste des utilisateurs |
 
 ### Produits

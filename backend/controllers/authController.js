@@ -70,10 +70,54 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
+// PUT /api/auth/me
+const updateMe = asyncHandler(async (req, res) => {
+  const { name, email, currentPassword, password } = req.body;
+  const user = await User.findById(req.user._id).select('+password');
+
+  if (!user) {
+    res.status(404);
+    throw new Error('Utilisateur introuvable');
+  }
+
+  if (email && email.toLowerCase() !== user.email) {
+    const taken = await User.findOne({ email: email.toLowerCase() });
+
+    if (taken) {
+      res.status(400);
+      throw new Error('Cet email est déjà utilisé');
+    }
+
+    user.email = email;
+  }
+
+  if (name) user.name = name;
+
+  // Le mot de passe actuel est exigé avant tout changement
+  if (password) {
+    if (!currentPassword || !(await user.matchPassword(currentPassword))) {
+      res.status(401);
+      throw new Error('Mot de passe actuel incorrect');
+    }
+
+    user.password = password;
+  }
+
+  const updated = await user.save();
+
+  res.json({
+    _id: updated._id,
+    name: updated.name,
+    email: updated.email,
+    role: updated.role,
+    token: generateToken(updated),
+  });
+});
+
 // GET /api/auth/users (admin)
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find().sort({ createdAt: -1 });
   res.json(users);
 });
 
-module.exports = { register, login, getMe, getUsers };
+module.exports = { register, login, getMe, updateMe, getUsers };

@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (payload) => persist(await authService.register(payload));
 
+  const updateProfile = async (payload) => persist(await authService.updateProfile(payload));
+
   const logout = () => {
     localStorage.removeItem(STORAGE_KEY);
     setUser(null);
@@ -45,6 +47,7 @@ export const AuthProvider = ({ children }) => {
       loading,
       login,
       register,
+      updateProfile,
       logout,
       isAuthenticated: Boolean(user),
       isAdmin: user?.role === 'admin',
