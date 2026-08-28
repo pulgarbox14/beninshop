@@ -12,8 +12,6 @@ module.exports = [
     ...visuel('imgban4.png'),
     category: 'Informatique',
     stock: 20,
-    rating: 5,
-    numReviews: 24,
     featured: true,
   },
   {
@@ -24,8 +22,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Informatique',
     stock: 15,
-    rating: 5,
-    numReviews: 27,
     featured: true,
   },
   {
@@ -36,8 +32,6 @@ module.exports = [
     ...visuel('imgban3.png'),
     category: 'Informatique',
     stock: 10,
-    rating: 4.5,
-    numReviews: 19,
     featured: true,
   },
   {
@@ -48,8 +42,6 @@ module.exports = [
     ...visuel('imgban6.png'),
     category: 'Informatique',
     stock: 12,
-    rating: 4,
-    numReviews: 8,
   },
   {
     name: 'Unité centrale Dell',
@@ -59,8 +51,6 @@ module.exports = [
     ...visuel('imgban3.png'),
     category: 'Informatique',
     stock: 7,
-    rating: 4.5,
-    numReviews: 6,
   },
   {
     name: 'Barrette RAM 8 Go',
@@ -70,8 +60,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Informatique',
     stock: 24,
-    rating: 4.5,
-    numReviews: 11,
   },
 
   // ---------- Accessoires ----------
@@ -83,8 +71,6 @@ module.exports = [
     ...visuel('imgban2.png'),
     category: 'Accessoires',
     stock: 50,
-    rating: 4.5,
-    numReviews: 56,
     featured: true,
   },
   {
@@ -95,8 +81,6 @@ module.exports = [
     ...visuel('imgban2.png'),
     category: 'Accessoires',
     stock: 30,
-    rating: 4.5,
-    numReviews: 34,
     featured: true,
   },
   {
@@ -107,8 +91,6 @@ module.exports = [
     ...visuel('imgban2.png'),
     category: 'Accessoires',
     stock: 25,
-    rating: 4.5,
-    numReviews: 18,
     featured: true,
   },
   {
@@ -119,8 +101,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Accessoires',
     stock: 18,
-    rating: 4.5,
-    numReviews: 11,
     featured: true,
   },
   {
@@ -131,8 +111,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Accessoires',
     stock: 40,
-    rating: 5,
-    numReviews: 42,
     featured: true,
   },
   {
@@ -143,8 +121,6 @@ module.exports = [
     ...visuel('imgban4.png'),
     category: 'Accessoires',
     stock: 35,
-    rating: 4,
-    numReviews: 14,
   },
   {
     name: 'Hub USB-C 6 en 1',
@@ -154,8 +130,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Accessoires',
     stock: 22,
-    rating: 4.5,
-    numReviews: 9,
   },
   {
     name: 'Tapis de souris XXL',
@@ -165,8 +139,6 @@ module.exports = [
     ...visuel('imgban2.png'),
     category: 'Accessoires',
     stock: 45,
-    rating: 4,
-    numReviews: 21,
   },
 
   // ---------- Téléphonie ----------
@@ -178,8 +150,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Téléphonie',
     stock: 16,
-    rating: 4.5,
-    numReviews: 31,
   },
   {
     name: 'Écouteurs sans fil',
@@ -189,8 +159,6 @@ module.exports = [
     ...visuel('imgban2.png'),
     category: 'Téléphonie',
     stock: 38,
-    rating: 4,
-    numReviews: 27,
   },
   {
     name: 'Batterie externe 20000 mAh',
@@ -200,8 +168,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Téléphonie',
     stock: 28,
-    rating: 4.5,
-    numReviews: 18,
   },
   {
     name: 'Chargeur rapide 33W',
@@ -211,8 +177,6 @@ module.exports = [
     ...visuel('imgban.png'),
     category: 'Téléphonie',
     stock: 42,
-    rating: 4,
-    numReviews: 12,
   },
 
   // ---------- Impression ----------
@@ -224,8 +188,6 @@ module.exports = [
     ...visuel('imgban3.png'),
     category: 'Impression',
     stock: 9,
-    rating: 4,
-    numReviews: 7,
   },
   {
     name: 'Cartouche encre noire',
@@ -235,8 +197,6 @@ module.exports = [
     ...visuel('imgban3.png'),
     category: 'Impression',
     stock: 30,
-    rating: 4,
-    numReviews: 5,
   },
   {
     name: 'Rame de papier A4',
@@ -246,8 +206,6 @@ module.exports = [
     ...visuel('imgban3.png'),
     category: 'Impression',
     stock: 60,
-    rating: 4.5,
-    numReviews: 16,
   },
 
   // ---------- Réseau ----------
@@ -259,8 +217,6 @@ module.exports = [
     ...visuel('imgban6.png'),
     category: 'Réseau',
     stock: 11,
-    rating: 4.5,
-    numReviews: 13,
   },
   {
     name: 'Répéteur Wi-Fi',
@@ -270,8 +226,6 @@ module.exports = [
     ...visuel('imgban6.png'),
     category: 'Réseau',
     stock: 20,
-    rating: 4,
-    numReviews: 10,
   },
   {
     name: 'Câble Ethernet 10 m',
@@ -281,7 +235,5 @@ module.exports = [
     ...visuel('imgban5.png'),
     category: 'Réseau',
     stock: 50,
-    rating: 4,
-    numReviews: 8,
   },
 ];

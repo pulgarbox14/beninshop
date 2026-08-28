@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import Rating from '../components/Rating';
 import ProductCard from '../components/ProductCard';
+import ReviewSection from '../components/ReviewSection';
 import { IconCart, IconCheck, IconMinus, IconPlus, IconShield, IconTruck } from '../components/Icons';
 
 // Fiche produit
@@ -17,6 +18,7 @@ const ProductDetail = () => {
   const [related, setRelated] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [visuel, setVisuel] = useState(0);
+  const [avisOuverts, setAvisOuverts] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [added, setAdded] = useState(false);
@@ -27,6 +29,7 @@ const ProductDetail = () => {
     setAdded(false);
     setQuantity(1);
     setVisuel(0);
+    setAvisOuverts(false);
 
     fetchProductById(id)
       .then((data) => {
@@ -118,7 +121,24 @@ const ProductDetail = () => {
 
         <div className="product-info">
           <h1>{product.name}</h1>
-          <Rating value={product.rating} count={product.numReviews} size={17} />
+
+          <button
+            type="button"
+            className="rating-link"
+            onClick={() => {
+              setAvisOuverts(true);
+              setTimeout(() => document.getElementById('avis')?.scrollIntoView({ behavior: 'smooth' }), 60);
+            }}
+          >
+            {product.numReviews > 0 ? (
+              <>
+                <Rating value={product.rating} count={product.numReviews} size={17} />
+                <span>Voir les avis</span>
+              </>
+            ) : (
+              <span>Aucun avis — donnez le vôtre</span>
+            )}
+          </button>
 
           <p className="price">
             {formatPrice(product.price)}
@@ -195,6 +215,19 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
+
+      {avisOuverts ? (
+        <ReviewSection
+          product={product}
+          onChange={(data) => setProduct((current) => ({ ...current, ...data }))}
+        />
+      ) : (
+        <div className="reviews-toggle">
+          <button type="button" className="btn btn-outline" onClick={() => setAvisOuverts(true)}>
+            Voir les avis {product.numReviews > 0 ? `(${product.numReviews})` : ''}
+          </button>
+        </div>
+      )}
 
       {related.length > 0 && (
         <section className="section">

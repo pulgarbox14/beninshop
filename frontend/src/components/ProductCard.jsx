@@ -27,7 +27,9 @@ const ProductCard = ({ product, showRating = false }) => {
           <small>FCFA</small>
         </p>
 
-        {showRating && <Rating value={product.rating} count={product.numReviews} />}
+        {showRating && product.numReviews > 0 && (
+          <Rating value={product.rating} count={product.numReviews} />
+        )}
 
         <Link to={`/produit/${product._id}`} className="btn btn-primary btn-block">
           Voir

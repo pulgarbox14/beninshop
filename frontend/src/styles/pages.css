@@ -773,3 +773,122 @@
   justify-content: center;
   margin-top: 10px;
 }
+
+/* Avis clients */
+.rating-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.rating-link span:hover {
+  color: var(--yellow-dark);
+  text-decoration: underline;
+}
+
+.reviews-toggle {
+  padding: 26px 0 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 30px;
+}
+
+.reviews {
+  scroll-margin-top: calc(var(--header-height) + 20px);
+  padding: 30px 0 10px;
+  border-top: 1px solid var(--border);
+  margin-top: 30px;
+}
+
+.reviews .section-title {
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background-color: var(--bg-soft);
+  margin-bottom: 22px;
+}
+
+.reviews-summary strong {
+  font-size: 34px;
+  color: var(--navy);
+}
+
+.reviews-summary span {
+  display: block;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.reviews-list {
+  display: grid;
+  gap: 16px;
+  max-width: 760px;
+}
+
+.review {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.review-head strong {
+  color: var(--navy);
+}
+
+.review-date {
+  font-size: 12.5px;
+  color: var(--text-light);
+}
+
+.review p {
+  color: var(--text-muted);
+  font-size: 14.5px;
+}
+
+.review-form {
+  max-width: 620px;
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.review-form h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.rating-input {
+  display: flex;
+  gap: 6px;
+}
+
+.rating-input button {
+  color: var(--border);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.rating-input button:hover {
+  transform: scale(1.1);
+}
+
+.rating-input button.active {
+  color: var(--yellow-dark);
+}

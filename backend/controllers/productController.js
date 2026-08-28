@@ -142,6 +142,69 @@ const deleteProduct = asyncHandler(async (req, res) => {
   res.json({ message: 'Produit supprimé avec succès', _id: req.params.id });
 });
 
+// POST /api/products/:id/reviews
+const createReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+  const note = Number(rating);
+
+  if (!Number.isInteger(note) || note < 1 || note > 5) {
+    res.status(400);
+    throw new Error('La note doit être comprise entre 1 et 5');
+  }
+
+  if (!texteRequis(comment, 5)) {
+    res.status(400);
+    throw new Error('Merci d\'écrire un commentaire d\'au moins 5 caractères');
+  }
+
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(404);
+    throw new Error('Produit introuvable');
+  }
+
+  const dejaNote = product.reviews.some(
+    (avis) => avis.user.toString() === req.user._id.toString()
+  );
+
+  if (dejaNote) {
+    res.status(400);
+    throw new Error('Vous avez déjà laissé un avis sur ce produit');
+  }
+
+  product.reviews.push({
+    user: req.user._id,
+    name: req.user.name,
+    rating: note,
+    comment: comment.trim().slice(0, 600),
+  });
+
+  product.recalculerNote();
+  await product.save();
+
+  res.status(201).json({ reviews: product.reviews, rating: product.rating, numReviews: product.numReviews });
+});
+
+// DELETE /api/products/:id/reviews/:reviewId (admin)
+const deleteReview = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(404);
+    throw new Error('Produit introuvable');
+  }
+
+  product.reviews = product.reviews.filter(
+    (avis) => avis._id.toString() !== req.params.reviewId
+  );
+
+  product.recalculerNote();
+  await product.save();
+
+  res.json({ reviews: product.reviews, rating: product.rating, numReviews: product.numReviews });
+});
+
 // GET /api/products/categories/all
 const getCategories = asyncHandler(async (req, res) => {
   const categories = await Product.aggregate([
@@ -159,5 +222,7 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  createReview,
+  deleteReview,
   getCategories,
 };
