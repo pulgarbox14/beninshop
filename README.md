@@ -97,16 +97,19 @@ npm run seed              # crée la base mini_ecommerce (24 produits + compte a
 
 Contenu de `.env` :
 
-Variables à renseigner (toutes vides dans `.env.example`) :
+Le fichier `.env.example` est séparé en deux blocs : ce qui se garde tel quel,
+et les 4 lignes à remplir vous-même.
 
-| Variable | Rôle |
-| --- | --- |
-| `PORT` | Port du serveur Express |
-| `MONGO_URI` | Connexion MongoDB |
-| `JWT_SECRET` | Clé de signature des JWT — valeur longue et aléatoire |
-| `JWT_EXPIRES_IN` | Durée de validité du token |
-| `CLIENT_URL` | Origine autorisée pour le CORS |
-| `ADMIN_NAME` / `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Compte administrateur créé par le seed |
+| Variable | À faire | Rôle |
+| --- | --- | --- |
+| `PORT` | garder | Port du serveur Express |
+| `MONGO_URI` | garder | Connexion MongoDB locale |
+| `JWT_EXPIRES_IN` | garder | Durée de validité du token |
+| `CLIENT_URL` | garder | Origine autorisée pour le CORS |
+| `JWT_SECRET` | **à remplir** | Clé de signature des JWT, longue et aléatoire |
+| `ADMIN_NAME` | **à remplir** | Votre nom d'administrateur |
+| `ADMIN_EMAIL` | **à remplir** | Votre email de connexion au tableau de bord |
+| `ADMIN_PASSWORD` | **à remplir** | Votre mot de passe (6 caractères minimum) |
 
 Aucun identifiant n'est écrit dans le code : le serveur refuse de démarrer sans
 `JWT_SECRET` et le seed s'arrête si une variable de compte manque.
