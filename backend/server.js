@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
@@ -7,6 +8,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const statsRoutes = require('./routes/statsRoutes');
 const settingRoutes = require('./routes/settingRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -25,6 +27,9 @@ app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Images televersees
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Route de test
 app.get('/api', (req, res) => {
   res.json({ message: 'API BeninShop opérationnelle', version: '1.0.0' });
@@ -36,6 +41,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/settings', settingRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Gestion des erreurs
 app.use(notFound);

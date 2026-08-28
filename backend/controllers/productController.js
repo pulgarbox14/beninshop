@@ -63,17 +63,22 @@ const getProductById = asyncHandler(async (req, res) => {
 
 // POST /api/products (admin)
 const createProduct = asyncHandler(async (req, res) => {
-  const { name, description, price, image, category, stock, featured } = req.body;
+  const { name, description, price, image, images, category, stock, featured } = req.body;
 
-  const product = await Product.create({
+  const galerie = Array.isArray(images) ? images.filter(Boolean) : [];
+
+  const product = new Product({
     name,
     description,
     price,
-    image: image || undefined,
+    image: galerie[0] || image || undefined,
+    images: galerie,
     category,
     stock,
     featured: Boolean(featured),
   });
+
+  await product.save();
 
   res.status(201).json(product);
 });
@@ -93,6 +98,10 @@ const updateProduct = asyncHandler(async (req, res) => {
       product[field] = req.body[field];
     }
   });
+
+  if (Array.isArray(req.body.images)) {
+    product.images = req.body.images.filter(Boolean);
+  }
 
   const updated = await product.save();
   res.json(updated);
