@@ -12,6 +12,7 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import MyOrders from './pages/MyOrders';
+import PaymentResult from './pages/PaymentResult';
 import Categories from './pages/Categories';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -51,6 +52,8 @@ const App = () => (
             <Route element={<ProtectedRoute />}>
               <Route path="/commande" element={<Checkout />} />
               <Route path="/mes-commandes" element={<MyOrders />} />
+              <Route path="/paiement/merci" element={<PaymentResult />} />
+              <Route path="/paiement/annule" element={<PaymentResult annule />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

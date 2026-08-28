@@ -30,6 +30,15 @@ const orderSchema = new mongoose.Schema(
       enum: ['en attente', 'payée', 'expédiée', 'livrée', 'annulée'],
       default: 'en attente',
     },
+    // Suivi du paiement PAYCORE
+    payment: {
+      id: { type: String, trim: true },
+      status: { type: String, trim: true, default: 'non payé' },
+      method: { type: String, trim: true },
+      provider: { type: String, trim: true },
+      checkoutUrl: { type: String, trim: true },
+      paidAt: { type: Date },
+    },
   },
   { timestamps: true }
 );

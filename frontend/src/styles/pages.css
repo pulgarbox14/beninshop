@@ -733,3 +733,43 @@
   color: var(--text-muted);
   padding: 4px 0;
 }
+
+/* Retour de paiement */
+.payment-result {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.payment-icon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+}
+
+.payment-icon.ok {
+  background-color: var(--green-soft);
+  color: var(--green);
+}
+
+.payment-icon.attente {
+  background-color: var(--yellow-soft);
+  color: var(--yellow-dark);
+}
+
+.payment-status {
+  max-width: 460px;
+  color: var(--text-muted);
+}
+
+.payment-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}

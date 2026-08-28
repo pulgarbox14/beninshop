@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMyOrders } from '../services/orderService';
+import { createCheckout } from '../services/paymentService';
 import { formatDate, formatPrice } from '../utils';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
@@ -18,6 +19,20 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [enCours, setEnCours] = useState('');
+
+  const payer = async (orderId) => {
+    setError('');
+    setEnCours(orderId);
+
+    try {
+      const { checkoutUrl } = await createCheckout(orderId);
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      setError(err.message);
+      setEnCours('');
+    }
+  };
 
   useEffect(() => {
     fetchMyOrders()
@@ -71,6 +86,17 @@ const MyOrders = () => {
                 <span>Total</span>
                 <span>{formatPrice(order.total)} FCFA</span>
               </div>
+
+              {order.status === 'en attente' && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => payer(order._id)}
+                  disabled={enCours === order._id}
+                >
+                  {enCours === order._id ? 'Redirection...' : 'Payer cette commande'}
+                </button>
+              )}
             </article>
           ))
         )}
