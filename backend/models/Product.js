@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+const reviewSchema = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    name: { type: String, required: true, trim: true },
+    rating: { type: Number, required: true, min: 1, max: 5 },
+    comment: { type: String, required: true, trim: true, maxlength: 600 },
+  },
+  { timestamps: true }
+);
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -37,6 +47,11 @@ const productSchema = new mongoose.Schema(
       min: [0, 'Le stock ne peut pas être négatif'],
       default: 0,
     },
+    reviews: {
+      type: [reviewSchema],
+      default: [],
+    },
+    // Moyenne calculee a partir des avis
     rating: {
       type: Number,
       default: 0,
@@ -55,6 +70,14 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Recalcule la note moyenne apres chaque avis
+productSchema.methods.recalculerNote = function recalculerNote() {
+  this.numReviews = this.reviews.length;
+  this.rating = this.reviews.length
+    ? Math.round((this.reviews.reduce((somme, avis) => somme + avis.rating, 0) / this.reviews.length) * 10) / 10
+    : 0;
+};
 
 // image reste synchronisee sur la premiere de la galerie
 productSchema.pre('save', function syncImage(next) {

@@ -12,6 +12,18 @@ export const fetchProductById = async (id) => {
   return data;
 };
 
+// Depose un avis
+export const addReview = async (id, payload) => {
+  const { data } = await api.post(`/products/${id}/reviews`, payload);
+  return data;
+};
+
+// Supprime un avis (admin)
+export const deleteReview = async (id, reviewId) => {
+  const { data } = await api.delete(`/products/${id}/reviews/${reviewId}`);
+  return data;
+};
+
 // Categories
 export const fetchCategories = async () => {
   const { data } = await api.get('/products/categories/all');

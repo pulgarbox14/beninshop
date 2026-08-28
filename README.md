@@ -26,7 +26,8 @@ le catalogue depuis un tableau de bord protégé par JWT.
 ### Boutique
 - Page d'accueil : bannière défilante, liste des produits, services, newsletter
 - Catalogue : recherche, filtre par catégorie, tri et pagination
-- Fiche produit : image, description, prix, catégorie, stock, ajout au panier
+- Fiche produit : galerie d'images, description, prix, catégorie, stock, ajout au panier
+- Avis clients : note sur 5 et commentaire, un avis par personne et par produit
 - Panier : quantités, suppression d'une ligne, vidage complet, total
 - Commande : formulaire de livraison, paiement en ligne et historique des commandes
 - Paiement Mobile Money ou carte bancaire via la passerelle PAYCORE
@@ -225,6 +226,8 @@ Base : `http://localhost:5000/api`
 | PUT | `/products/:id` | Admin | Modification |
 | DELETE | `/products/:id` | Admin | Suppression |
 | GET | `/products/categories/all` | Public | Catégories et nombre de produits |
+| POST | `/products/:id/reviews` | JWT | Publie un avis (note 1-5 et commentaire) |
+| DELETE | `/products/:id/reviews/:reviewId` | Admin | Supprime un avis |
 | POST | `/upload` | Admin | Téléverse jusqu'à 6 images (5 Mo max, formats image) |
 
 ### Commandes et statistiques
@@ -255,8 +258,9 @@ Authorization: Bearer <token>
 **User** — `name`, `email` (unique), `password` (haché bcrypt), `role` (`user` \| `admin`), dates.
 
 **Product** — `name`, `description`, `price`, `images[]` (galerie), `image` (visuel
-principal, synchronisé sur la première image), `category`, `stock`, `rating`,
-`numReviews`, `featured`, `createdAt` (date de création).
+principal, synchronisé sur la première image), `category`, `stock`, `reviews[]`
+(avis clients), `rating` et `numReviews` (calculés depuis les avis), `featured`,
+`createdAt` (date de création).
 
 **Order** — `user`, `items[]` (produit, nom, prix, quantité), `total`, `shippingAddress`,
 `status` (`en attente`, `payée`, `expédiée`, `livrée`, `annulée`), dates.
