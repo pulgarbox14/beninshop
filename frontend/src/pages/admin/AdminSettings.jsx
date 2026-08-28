@@ -1,6 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { fetchSettings, updateSettings } from '../../services/settingService';
 import Alert from '../../components/Alert';
+
+const RESEAUX = [
+  { key: 'facebook', label: 'Facebook', placeholder: 'https://facebook.com/votrepage' },
+  { key: 'instagram', label: 'Instagram', placeholder: 'https://instagram.com/votrecompte' },
+  { key: 'whatsapp', label: 'WhatsApp', placeholder: 'https://wa.me/22901234567' },
+  { key: 'youtube', label: 'YouTube', placeholder: 'https://youtube.com/@votrechaine' },
+];
 
 // Parametres : l'admin modifie ses informations
 const AdminSettings = () => {
@@ -52,7 +60,40 @@ const AdminSettings = () => {
     }
   };
 
+  const [liens, setLiens] = useState({ facebook: '', instagram: '', whatsapp: '', youtube: '' });
+  const [liensError, setLiensError] = useState('');
+  const [liensMessage, setLiensMessage] = useState('');
+  const [savingLiens, setSavingLiens] = useState(false);
+
+  useEffect(() => {
+    fetchSettings()
+      .then((data) => setLiens({ ...liens, ...data }))
+      .catch((err) => setLiensError(err.message));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleLienChange = (event) =>
+    setLiens((current) => ({ ...current, [event.target.name]: event.target.value }));
+
+  const handleLiensSubmit = async (event) => {
+    event.preventDefault();
+    setLiensError('');
+    setLiensMessage('');
+    setSavingLiens(true);
+
+    try {
+      const data = await updateSettings(liens);
+      setLiens(data);
+      setLiensMessage('Les liens des réseaux sociaux ont été enregistrés.');
+    } catch (err) {
+      setLiensError(err.message);
+    } finally {
+      setSavingLiens(false);
+    }
+  };
+
   return (
+    <>
     <section className="panel">
       <div className="panel-head">
         <h2>Mes informations</h2>
@@ -155,6 +196,48 @@ const AdminSettings = () => {
         </form>
       </div>
     </section>
+
+    <section className="panel" style={{ marginTop: 22 }}>
+      <div className="panel-head">
+        <h2>Réseaux sociaux</h2>
+      </div>
+
+      <div className="panel-body">
+        <Alert type="error">{liensError}</Alert>
+        <Alert type="success">{liensMessage}</Alert>
+
+        <p className="form-hint" style={{ marginBottom: 18 }}>
+          Ces liens sont utilisés par les icônes du pied de page. Laissez un champ vide pour
+          désactiver le lien correspondant.
+        </p>
+
+        <form className="admin-form" onSubmit={handleLiensSubmit}>
+          <div className="form-row">
+            {RESEAUX.map((reseau) => (
+              <div className="form-group" key={reseau.key}>
+                <label className="form-label" htmlFor={reseau.key}>
+                  {reseau.label}
+                </label>
+                <input
+                  id={reseau.key}
+                  name={reseau.key}
+                  type="url"
+                  className="form-control"
+                  value={liens[reseau.key] || ''}
+                  onChange={handleLienChange}
+                  placeholder={reseau.placeholder}
+                />
+              </div>
+            ))}
+          </div>
+
+          <button type="submit" className="btn btn-primary" disabled={savingLiens}>
+            {savingLiens ? 'Enregistrement...' : 'Enregistrer les liens'}
+          </button>
+        </form>
+      </div>
+    </section>
+    </>
   );
 };
 

@@ -37,6 +37,7 @@ le catalogue depuis un tableau de bord protégé par JWT.
 - CRUD complet des produits (ajout, modification, suppression)
 - Consultation des catégories, des utilisateurs et des commandes
 - Modification de ses propres informations (nom, email, mot de passe)
+- Modification des liens vers les réseaux sociaux affichés dans le pied de page
 - Mise à jour du statut d'une commande
 
 ---
@@ -63,7 +64,7 @@ beninshop/
 │   ├── middleware/      # JWT, rôle admin, gestion des erreurs
 │   ├── models/          # schémas Mongoose (User, Product, Order)
 │   ├── routes/          # routes Express
-│   ├── seed/            # données de départ (8 produits, compte admin)
+│   ├── seed/            # données de départ (24 produits, compte admin)
 │   ├── server.js
 │   └── package.json
 └── frontend/
@@ -91,7 +92,7 @@ Prérequis : **Node.js 18+** et **MongoDB** installé et démarré localement.
 cd backend
 npm install
 cp .env.example .env      # puis ajuster les valeurs si besoin
-npm run seed              # crée la base mini_ecommerce (8 produits + compte admin)
+npm run seed              # crée la base mini_ecommerce (24 produits + compte admin)
 ```
 
 Contenu de `.env` :
@@ -139,7 +140,7 @@ Scripts utiles :
 
 | Commande | Effet |
 | --- | --- |
-| `npm run seed` (backend) | Remplit la base avec les 8 produits et le compte admin |
+| `npm run seed` (backend) | Remplit la base avec les 24 produits et le compte admin |
 | `npm run seed:destroy` (backend) | Vide la base `mini_ecommerce` |
 | `npm run build` (frontend) | Génère la version de production dans `dist/` |
 
@@ -199,6 +200,8 @@ Base : `http://localhost:5000/api`
 | GET | `/orders` | Admin | Toutes les commandes |
 | PUT | `/orders/:id` | Admin | Change le statut d'une commande |
 | GET | `/stats` | Admin | Statistiques du tableau de bord |
+| GET | `/settings` | Public | Liens des réseaux sociaux |
+| PUT | `/settings` | Admin | Modifie les liens des réseaux sociaux |
 
 Les routes protégées attendent l'en-tête :
 
@@ -217,6 +220,33 @@ Authorization: Bearer <token>
 
 **Order** — `user`, `items[]` (produit, nom, prix, quantité), `total`, `shippingAddress`,
 `status` (`en attente`, `payée`, `expédiée`, `livrée`, `annulée`), dates.
+
+**Setting** — document unique contenant les liens `facebook`, `instagram`, `whatsapp`
+et `youtube`, modifiables depuis le tableau de bord.
+
+---
+
+## Images des produits
+
+Le catalogue compte 24 produits répartis en 5 catégories (Informatique, Accessoires,
+Téléphonie, Impression, Réseau). Chaque produit attend une image dans
+`frontend/public/images/products/` :
+
+```
+ordinateur-hp.png        disque-ssd.png          ecran-samsung.png
+pc-lenovo.png            unite-centrale-dell.png barrette-ram.png
+souris-logitech.png      clavier-gamer.png       casque-bluetooth.png
+webcam-hd.png            cle-usb.png             sacoche.png
+hub-usb-c.png            tapis-souris.png        smartphone-tecno.png
+ecouteurs-sans-fil.png   batterie-externe.png    chargeur-rapide.png
+chargeur-rapide.png      imprimante-hp.png       cartouche-encre.png
+papier-a4.png            routeur-wifi.png        repeteur-wifi.png
+cable-ethernet.png
+```
+
+Tant qu'une image est absente, la carte produit affiche un visuel neutre.
+Le chemin de l'image peut aussi être modifié produit par produit depuis le
+tableau de bord (champ « Image »).
 
 ---
 

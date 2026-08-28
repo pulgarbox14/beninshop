@@ -656,31 +656,6 @@
   border-radius: var(--radius);
 }
 
-.stat-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin: 24px 0;
-}
-
-.stat-strip div {
-  padding: 20px;
-  text-align: center;
-  border-radius: var(--radius);
-  background-color: var(--bg-soft);
-}
-
-.stat-strip strong {
-  display: block;
-  font-size: 26px;
-  color: var(--navy);
-}
-
-.stat-strip span {
-  font-size: 13.5px;
-  color: var(--text-muted);
-}
-
 /* Page 404 */
 .not-found {
   display: grid;

@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchSettings } from '../services/settingService';
 import Logo from './Logo';
 import {
   IconClock,
@@ -39,7 +41,23 @@ const paiements = [
 ];
 
 // Pied de page
-const Footer = () => (
+const Footer = () => {
+  const [reseaux, setReseaux] = useState({});
+
+  useEffect(() => {
+    fetchSettings()
+      .then(setReseaux)
+      .catch(() => setReseaux({}));
+  }, []);
+
+  const socials = [
+    { key: 'facebook', label: 'Facebook', icon: <IconFacebook /> },
+    { key: 'instagram', label: 'Instagram', icon: <IconInstagram /> },
+    { key: 'whatsapp', label: 'WhatsApp', icon: <IconWhatsapp /> },
+    { key: 'youtube', label: 'YouTube', icon: <IconYoutube /> },
+  ];
+
+  return (
   <footer className="footer">
     <div className="container">
       <div className="footer-grid">
@@ -51,18 +69,18 @@ const Footer = () => (
             La qualité à prix imbattables !
           </p>
           <div className="socials">
-            <a href="#" className="social-link" aria-label="Facebook">
-              <IconFacebook />
-            </a>
-            <a href="#" className="social-link" aria-label="Instagram">
-              <IconInstagram />
-            </a>
-            <a href="#" className="social-link" aria-label="WhatsApp">
-              <IconWhatsapp />
-            </a>
-            <a href="#" className="social-link" aria-label="YouTube">
-              <IconYoutube />
-            </a>
+            {socials.map((social) => (
+              <a
+                key={social.key}
+                href={reseaux[social.key] || '#'}
+                className="social-link"
+                aria-label={social.label}
+                target={reseaux[social.key] ? '_blank' : undefined}
+                rel={reseaux[social.key] ? 'noopener noreferrer' : undefined}
+              >
+                {social.icon}
+              </a>
+            ))}
           </div>
         </div>
 
@@ -138,7 +156,8 @@ const Footer = () => (
         </span>
       </div>
     </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 export default Footer;
