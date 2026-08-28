@@ -21,7 +21,7 @@ const AdminCategories = () => {
   return (
     <section className="panel">
       <div className="panel-head">
-        <h2>Categories ({categories.length})</h2>
+        <h2>Catégories ({categories.length})</h2>
         <Link to="/admin/produits/nouveau" className="btn btn-navy btn-sm">
           Ajouter un produit
         </Link>
