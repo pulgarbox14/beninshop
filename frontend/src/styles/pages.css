@@ -12,7 +12,7 @@
 
 .hero-slide {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   align-items: center;
   min-height: 380px;
 }
@@ -49,20 +49,39 @@
 }
 
 .hero-visual {
+  position: relative;
   align-self: stretch;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  padding: 26px 34px 26px 30px;
+}
+
+/* Le jaune est en fond, la photo passe par-dessus et deborde sur le navy */
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+  clip-path: url(#hero-curve);
+}
+
+.hero-clip {
+  position: absolute;
+  width: 0;
+  height: 0;
 }
 
 .hero-visual img {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-height: 330px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 26px rgba(11, 29, 69, 0.28));
 }
 
 .hero-dots {
   position: absolute;
+  z-index: 2;
   left: 50%;
   bottom: 18px;
   transform: translateX(-50%);

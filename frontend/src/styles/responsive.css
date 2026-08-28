@@ -131,7 +131,12 @@
   }
 
   .hero-visual {
-    max-height: 260px;
+    max-height: 280px;
+    padding: 24px 20px 26px;
+  }
+
+  .hero-visual::before {
+    clip-path: url(#hero-curve-mobile);
   }
 
   .hero-arrow {
@@ -144,6 +149,53 @@
 
   .stat-strip {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* En-tete compact : le libelle du bouton laisse la place a l'icone */
+@media (max-width: 720px) {
+  .navbar {
+    gap: 10px;
+    min-height: 68px;
+  }
+
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-name {
+    font-size: 19px;
+  }
+
+  .brand-tagline {
+    display: none;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .cart-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn-login span,
+  .user-menu-label {
+    display: none;
+  }
+
+  .btn-login {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .user-menu-trigger {
+    padding: 6px;
+    gap: 4px;
   }
 }
 
@@ -235,6 +287,7 @@
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+    padding: 20px 0 74px;
   }
 
   .not-found h1 {

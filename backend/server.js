@@ -11,6 +11,11 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+if (!process.env.JWT_SECRET) {
+  console.error('Variable JWT_SECRET absente du fichier .env (voir .env.example)');
+  process.exit(1);
+}
+
 // Connexion a MongoDB
 connectDB();
 

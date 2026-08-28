@@ -11,27 +11,57 @@ const slides = [
     textEnd: 'Livraison rapide et paiement sécurisé.',
     cta: 'Découvrir nos produits',
     to: '/produits',
-    image: '/images/hero-tech.svg',
+    image: '/images/imgban.png',
   },
   {
-    title: 'Livraison rapide',
-    highlight: 'partout au Bénin',
-    text: 'Vos commandes livrées en ',
+    title: 'Ordinateurs portables',
+    highlight: 'pour tous les budgets',
+    text: 'Des machines fiables pour le travail et les études, à partir de ',
+    textHighlight: '350 000 FCFA.',
+    textEnd: 'Garantie et service après-vente inclus.',
+    cta: 'Voir les ordinateurs',
+    to: '/produits?category=Informatique',
+    image: '/images/imgban4.png',
+  },
+  {
+    title: 'Configurations',
+    highlight: 'gaming complètes',
+    text: 'Écran, tour RGB, clavier mécanique et casque : ',
+    textHighlight: 'le setup complet',
+    textEnd: 'monté et testé avant livraison.',
+    cta: 'Voir les accessoires',
+    to: '/produits?category=Accessoires',
+    image: '/images/imgban2.png',
+  },
+  {
+    title: 'Équipez votre',
+    highlight: 'bureau complet',
+    text: 'Unité centrale, écran, clavier et souris livrés en ',
     textHighlight: '24h - 48h',
-    textEnd: 'à Cotonou et dans tout le pays.',
-    cta: 'Commander maintenant',
-    to: '/produits',
-    image: '/images/hero-livraison.svg',
-  },
-  {
-    title: 'Informatique et',
-    highlight: 'accessoires',
-    text: 'Ordinateurs, écrans, claviers, casques : ',
-    textHighlight: 'tout l’équipement',
-    textEnd: 'dont vous avez besoin.',
+    textEnd: 'partout au Bénin.',
     cta: 'Voir les catégories',
     to: '/categories',
-    image: '/images/hero-promo.svg',
+    image: '/images/imgban3.png',
+  },
+  {
+    title: 'Nouveaux arrivages',
+    highlight: 'en boutique',
+    text: 'Les derniers modèles sous Windows 11, ',
+    textHighlight: 'écrans haute définition',
+    textEnd: 'et grande autonomie.',
+    cta: 'Voir les nouveautés',
+    to: '/produits?sort=recent',
+    image: '/images/imgban6.png',
+  },
+  {
+    title: 'PC convertibles',
+    highlight: 'et tactiles',
+    text: 'Un ordinateur et une tablette en un seul appareil, ',
+    textHighlight: 'léger et polyvalent,',
+    textEnd: 'idéal pour les étudiants.',
+    cta: 'Découvrir nos produits',
+    to: '/produits',
+    image: '/images/imgban5.png',
   },
 ];
 
@@ -48,6 +78,17 @@ const HeroCarousel = () => {
 
   return (
     <section className="hero" aria-label="Mises en avant">
+      {/* Decoupe courbe de la zone jaune */}
+      <svg className="hero-clip" aria-hidden="true">
+        <defs>
+          <clipPath id="hero-curve" clipPathUnits="objectBoundingBox">
+            <path d="M0.24 0 H1 V1 H0 C0.04 0.72 0.11 0.33 0.24 0 Z" />
+          </clipPath>
+          <clipPath id="hero-curve-mobile" clipPathUnits="objectBoundingBox">
+            <path d="M0 0.16 C0.32 0.02 0.7 0.02 1 0.12 V1 H0 Z" />
+          </clipPath>
+        </defs>
+      </svg>
       <div className="hero-slide" key={index}>
         <div className="hero-content">
           <h1>

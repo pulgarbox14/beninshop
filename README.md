@@ -36,6 +36,7 @@ le catalogue depuis un tableau de bord protégé par JWT.
 - Tableau de bord : nombre de produits, commandes, utilisateurs et chiffre d'affaires
 - CRUD complet des produits (ajout, modification, suppression)
 - Consultation des catégories, des utilisateurs et des commandes
+- Modification de ses propres informations (nom, email, mot de passe)
 - Mise à jour du statut d'une commande
 
 ---
@@ -62,7 +63,7 @@ beninshop/
 │   ├── middleware/      # JWT, rôle admin, gestion des erreurs
 │   ├── models/          # schémas Mongoose (User, Product, Order)
 │   ├── routes/          # routes Express
-│   ├── seed/            # jeu de données de départ (8 produits)
+│   ├── seed/            # données de départ (8 produits, compte admin)
 │   ├── server.js
 │   └── package.json
 └── frontend/
@@ -90,18 +91,25 @@ Prérequis : **Node.js 18+** et **MongoDB** installé et démarré localement.
 cd backend
 npm install
 cp .env.example .env      # puis ajuster les valeurs si besoin
-npm run seed              # crée la base mini_ecommerce et insère 8 produits
+npm run seed              # crée la base mini_ecommerce (8 produits + compte admin)
 ```
 
 Contenu de `.env` :
 
-```
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/mini_ecommerce
-JWT_SECRET=beninshop_secret_key_a_changer
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-```
+Variables à renseigner (toutes vides dans `.env.example`) :
+
+| Variable | Rôle |
+| --- | --- |
+| `PORT` | Port du serveur Express |
+| `MONGO_URI` | Connexion MongoDB |
+| `JWT_SECRET` | Clé de signature des JWT — valeur longue et aléatoire |
+| `JWT_EXPIRES_IN` | Durée de validité du token |
+| `CLIENT_URL` | Origine autorisée pour le CORS |
+| `ADMIN_NAME` / `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Compte administrateur créé par le seed |
+
+Aucun identifiant n'est écrit dans le code : le serveur refuse de démarrer sans
+`JWT_SECRET` et le seed s'arrête si une variable de compte manque.
+Le fichier `.env` n'est jamais versionné (`.gitignore`), seul `.env.example` l'est.
 
 ### 2. Frontend
 
@@ -131,20 +139,29 @@ Scripts utiles :
 
 | Commande | Effet |
 | --- | --- |
-| `npm run seed` (backend) | Remplit la base avec 8 produits, 2 comptes et 3 commandes |
+| `npm run seed` (backend) | Remplit la base avec les 8 produits et le compte admin |
 | `npm run seed:destroy` (backend) | Vide la base `mini_ecommerce` |
 | `npm run build` (frontend) | Génère la version de production dans `dist/` |
 
 ---
 
-## Comptes de démonstration
+## Comptes
 
-Créés par `npm run seed` :
+`npm run seed` enregistre **le compte administrateur en base**, à partir des
+valeurs de votre `.env` — c'est cette écriture dans MongoDB qui rend la connexion
+possible. Aucun identifiant n'apparaît dans le code ni dans le dépôt.
 
-| Rôle | Email | Mot de passe |
-| --- | --- | --- |
-| Administrateur | `admin@beninshop.bj` | `admin123` |
-| Client | `client@beninshop.bj` | `client123` |
+Le seed peut être relancé sans risque : il réinitialise le catalogue, met à jour
+l'administrateur (mot de passe re-haché) et **conserve les comptes clients et
+leurs commandes**. Pour tout effacer : `npm run seed:destroy`.
+
+Les comptes clients ne sont pas créés par le seed : ils s'inscrivent depuis la
+page **Inscription** du site et sont enregistrés en base (mot de passe haché avec
+bcrypt).
+
+Pendant le développement, renseigner `VITE_DEMO_ADMIN` dans `frontend/.env`
+affiche un rappel du compte admin sur la page de connexion. La variable est vide
+par défaut et le build de production n'affiche jamais cet encart.
 
 ---
 
@@ -159,6 +176,7 @@ Base : `http://localhost:5000/api`
 | POST | `/auth/register` | Public | Inscription (mot de passe chiffré avec bcrypt) |
 | POST | `/auth/login` | Public | Connexion, renvoie un JWT |
 | GET | `/auth/me` | JWT | Profil de l'utilisateur connecté |
+| PUT | `/auth/me` | JWT | Modifie son nom, son email ou son mot de passe |
 | GET | `/auth/users` | Admin | Liste des utilisateurs |
 
 ### Produits

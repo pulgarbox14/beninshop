@@ -30,9 +30,12 @@ const informations = [
 const paiements = [
   { src: '/images/paiement/visa.svg', alt: 'Visa' },
   { src: '/images/paiement/mastercard.svg', alt: 'Mastercard' },
-  { src: '/images/paiement/moov-money.svg', alt: 'Moov Money' },
-  { src: '/images/paiement/wave.svg', alt: 'Wave' },
-  { src: '/images/paiement/mtn-momo.svg', alt: 'MTN Mobile Money' },
+  { src: '/images/paiement/moov.png', alt: 'Moov Money' },
+  { src: '/images/paiement/mtnmomo.jpeg', alt: 'MTN Mobile Money' },
+  { src: '/images/paiement/waves.jpeg', alt: 'Wave' },
+  { src: '/images/paiement/kkiapay.png', alt: 'KkiaPay' },
+  { src: '/images/paiement/fedapay.png', alt: 'FedaPay' },
+  { src: '/images/paiement/feexpay.png', alt: 'FeexPay' },
 ];
 
 // Pied de page
@@ -111,7 +114,9 @@ const Footer = () => (
           <h4>Moyens de paiement</h4>
           <div className="payments">
             {paiements.map((moyen) => (
-              <img key={moyen.alt} src={moyen.src} alt={moyen.alt} />
+              <span className="payment-badge" key={moyen.alt} title={moyen.alt}>
+                <img src={moyen.src} alt={moyen.alt} loading="lazy" />
+              </span>
             ))}
           </div>
         </div>
@@ -120,7 +125,16 @@ const Footer = () => (
       <div className="footer-bottom">
         <span>&copy; {new Date().getFullYear()} BeninShop. Tous droits réservés.</span>
         <span>
-          Conçu avec <span className="heart">&hearts;</span> au Bénin
+          Conçu par{' '}
+          <a
+            className="author-link"
+            href="https://pascalcarmel.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Pascal Carmel GUEZO
+          </a>{' '}
+          — Développeur Fullstack
         </span>
       </div>
     </div>

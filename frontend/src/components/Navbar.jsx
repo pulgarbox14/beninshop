@@ -13,6 +13,7 @@ import {
   IconClose,
   IconSearch,
   IconBox,
+  IconUser,
 } from './Icons';
 
 const links = [
@@ -153,8 +154,9 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <Link to="/connexion" className="btn btn-navy">
-                Se connecter
+              <Link to="/connexion" className="btn btn-navy btn-login" aria-label="Se connecter">
+                <IconUser size={18} />
+                <span>Se connecter</span>
               </Link>
             )}
           </div>
