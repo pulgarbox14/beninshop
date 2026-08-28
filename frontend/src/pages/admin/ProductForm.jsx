@@ -5,16 +5,17 @@ import {
   fetchCategories,
   fetchProductById,
   updateProduct,
+  uploadImages,
 } from '../../services/productService';
 import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 import { formatPrice } from '../../utils';
+import { IconClose, IconPlus } from '../../components/Icons';
 
 const emptyProduct = {
   name: '',
   description: '',
   price: '',
-  image: '/images/products/placeholder.svg',
   category: '',
   stock: '',
   featured: false,
@@ -27,6 +28,10 @@ const ProductForm = () => {
   const isEdit = Boolean(id);
 
   const [form, setForm] = useState(emptyProduct);
+  const [images, setImages] = useState([]);
+  const [mode, setMode] = useState('fichier');
+  const [lien, setLien] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
@@ -43,17 +48,17 @@ const ProductForm = () => {
     if (!isEdit) return;
 
     fetchProductById(id)
-      .then((product) =>
+      .then((product) => {
         setForm({
           name: product.name,
           description: product.description,
           price: product.price,
-          image: product.image,
           category: product.category,
           stock: product.stock,
           featured: product.featured,
-        })
-      )
+        });
+        setImages(product.images?.length ? product.images : [product.image].filter(Boolean));
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [id, isEdit]);
@@ -62,6 +67,37 @@ const ProductForm = () => {
     const { name, value, type, checked } = event.target;
     setForm((current) => ({ ...current, [name]: type === 'checkbox' ? checked : value }));
   };
+
+  const handleFiles = async (event) => {
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) return;
+
+    setError('');
+    setUploading(true);
+
+    try {
+      const chemins = await uploadImages(files);
+      setImages((current) => [...current, ...chemins].slice(0, 6));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploading(false);
+      event.target.value = '';
+    }
+  };
+
+  const handleAjoutLien = () => {
+    const url = lien.trim();
+    if (!url) return;
+
+    setImages((current) => [...current, url].slice(0, 6));
+    setLien('');
+  };
+
+  const retirerImage = (index) => setImages((current) => current.filter((_, i) => i !== index));
+
+  const definirPrincipale = (index) =>
+    setImages((current) => [current[index], ...current.filter((_, i) => i !== index)]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,6 +109,8 @@ const ProductForm = () => {
       ...form,
       price: Number(form.price),
       stock: Number(form.stock),
+      images,
+      image: images[0] || undefined,
     };
 
     try {
@@ -83,6 +121,7 @@ const ProductForm = () => {
         await createProduct(payload);
         setMessage('Produit ajouté avec succès.');
         setForm(emptyProduct);
+        setImages([]);
       }
 
       setTimeout(() => navigate('/admin/produits'), 900);
@@ -200,35 +239,78 @@ const ProductForm = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="image">
-              Image (URL ou chemin)
-            </label>
-            <input
-              id="image"
-              name="image"
-              className="form-control"
-              value={form.image}
-              onChange={handleChange}
-              placeholder="/images/products/ordinateur-hp.svg"
-            />
-            <p className="form-hint">
-              Laissez la valeur par défaut si vous n&apos;avez pas encore d&apos;image.
-            </p>
-          </div>
+            <span className="form-label">Images du produit</span>
 
-          {form.image && (
-            <div className="form-group">
-              <span className="table-thumb" style={{ width: 120, height: 100 }}>
-                <img
-                  src={form.image}
-                  alt="Apercu"
-                  onError={(event) => {
-                    event.currentTarget.src = '/images/products/placeholder.svg';
-                  }}
-                />
-              </span>
+            <div className="upload-tabs">
+              <button
+                type="button"
+                className={mode === 'fichier' ? 'active' : ''}
+                onClick={() => setMode('fichier')}
+              >
+                Depuis mes fichiers
+              </button>
+              <button
+                type="button"
+                className={mode === 'lien' ? 'active' : ''}
+                onClick={() => setMode('lien')}
+              >
+                Depuis un lien
+              </button>
             </div>
-          )}
+
+            {mode === 'fichier' ? (
+              <label className="upload-drop">
+                <input type="file" accept="image/*" multiple onChange={handleFiles} hidden />
+                <IconPlus size={22} />
+                <span>{uploading ? 'Envoi en cours...' : 'Choisir une ou plusieurs images'}</span>
+                <small>jpg, png, webp ou svg — 5 Mo maximum par fichier</small>
+              </label>
+            ) : (
+              <div className="upload-link">
+                <input
+                  type="url"
+                  className="form-control"
+                  value={lien}
+                  onChange={(event) => setLien(event.target.value)}
+                  placeholder="https://exemple.com/photo.jpg"
+                />
+                <button type="button" className="btn btn-outline" onClick={handleAjoutLien}>
+                  Ajouter
+                </button>
+              </div>
+            )}
+
+            <p className="form-hint">
+              {images.length}/6 image{images.length > 1 ? 's' : ''}. La première est l&apos;image
+              principale, cliquez sur une autre pour la mettre en avant.
+            </p>
+
+            {images.length > 0 && (
+              <div className="image-gallery">
+                {images.map((src, index) => (
+                  <div className={`gallery-item${index === 0 ? ' principale' : ''}`} key={src}>
+                    <img
+                      src={src}
+                      alt={`Visuel ${index + 1}`}
+                      onClick={() => definirPrincipale(index)}
+                      onError={(event) => {
+                        event.currentTarget.src = '/images/products/placeholder.svg';
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="gallery-remove"
+                      onClick={() => retirerImage(index)}
+                      aria-label="Retirer cette image"
+                    >
+                      <IconClose size={14} />
+                    </button>
+                    {index === 0 && <span className="gallery-badge">Principale</span>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           <div className="form-group">
             <label className="filter-option" htmlFor="featured">

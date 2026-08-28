@@ -35,6 +35,7 @@ le catalogue depuis un tableau de bord protégé par JWT.
 ### Administration (`/admin`, réservée au rôle `admin`)
 - Tableau de bord : nombre de produits, commandes, utilisateurs et chiffre d'affaires
 - CRUD complet des produits (ajout, modification, suppression)
+- Plusieurs images par produit : téléversement depuis l'ordinateur ou ajout d'un lien
 - Consultation des catégories, des utilisateurs et des commandes
 - Modification de ses propres informations (nom, email, mot de passe)
 - Modification des liens vers les réseaux sociaux affichés dans le pied de page
@@ -193,6 +194,7 @@ Base : `http://localhost:5000/api`
 | PUT | `/products/:id` | Admin | Modification |
 | DELETE | `/products/:id` | Admin | Suppression |
 | GET | `/products/categories/all` | Public | Catégories et nombre de produits |
+| POST | `/upload` | Admin | Téléverse jusqu'à 6 images (5 Mo max, formats image) |
 
 ### Commandes et statistiques
 
@@ -218,7 +220,8 @@ Authorization: Bearer <token>
 
 **User** — `name`, `email` (unique), `password` (haché bcrypt), `role` (`user` \| `admin`), dates.
 
-**Product** — `name`, `description`, `price`, `image`, `category`, `stock`, `rating`,
+**Product** — `name`, `description`, `price`, `images[]` (galerie), `image` (visuel
+principal, synchronisé sur la première image), `category`, `stock`, `rating`,
 `numReviews`, `featured`, `createdAt` (date de création).
 
 **Order** — `user`, `items[]` (produit, nom, prix, quantité), `total`, `shippingAddress`,

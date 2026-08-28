@@ -16,6 +16,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [visuel, setVisuel] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [added, setAdded] = useState(false);
@@ -25,6 +26,7 @@ const ProductDetail = () => {
     setLoading(true);
     setAdded(false);
     setQuantity(1);
+    setVisuel(0);
 
     fetchProductById(id)
       .then((data) => {
@@ -65,6 +67,7 @@ const ProductDetail = () => {
   }
 
   const outOfStock = product.stock === 0;
+  const visuels = product.images?.length ? product.images : [product.image];
 
   return (
     <div className="container">
@@ -79,14 +82,38 @@ const ProductDetail = () => {
       </nav>
 
       <section className="product-detail">
-        <div className="product-gallery">
-          <img
-            src={product.image}
-            alt={product.name}
-            onError={(event) => {
-              event.currentTarget.src = '/images/products/placeholder.svg';
-            }}
-          />
+        <div>
+          <div className="product-gallery">
+            <img
+              src={visuels[visuel]}
+              alt={product.name}
+              onError={(event) => {
+                event.currentTarget.src = '/images/products/placeholder.svg';
+              }}
+            />
+          </div>
+
+          {visuels.length > 1 && (
+            <div className="gallery-thumbs">
+              {visuels.map((src, index) => (
+                <button
+                  type="button"
+                  key={src}
+                  className={index === visuel ? 'active' : ''}
+                  onClick={() => setVisuel(index)}
+                  aria-label={`Visuel ${index + 1}`}
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    onError={(event) => {
+                      event.currentTarget.src = '/images/products/placeholder.svg';
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="product-info">

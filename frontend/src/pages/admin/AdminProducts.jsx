@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { deleteProduct, fetchProducts } from '../../services/productService';
 import { formatDate, formatPrice } from '../../utils';
 import Loader from '../../components/Loader';
@@ -20,12 +20,15 @@ const AdminProducts = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [toDelete, setToDelete] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const category = searchParams.get('category') || '';
 
   const load = () => {
     setLoading(true);
 
-    fetchProducts({ page, limit: PER_PAGE, search, sort: 'recent' })
+    fetchProducts({ page, limit: PER_PAGE, search, category, sort: 'recent' })
       .then((result) => {
         setData(result);
         setError('');
@@ -34,7 +37,7 @@ const AdminProducts = () => {
       .finally(() => setLoading(false));
   };
 
-  useEffect(load, [page, search]);
+  useEffect(load, [page, search, category]);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -61,7 +64,9 @@ const AdminProducts = () => {
 
       <section className="panel">
         <div className="panel-head">
-          <h2>Produits ({data.total})</h2>
+          <h2>
+            {category ? `Produits — ${category}` : 'Produits'} ({data.total})
+          </h2>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <form className="search-form" onSubmit={handleSearch} style={{ display: 'block' }}>
@@ -76,6 +81,19 @@ const AdminProducts = () => {
               </button>
             </form>
 
+            {category && (
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                onClick={() => {
+                  setPage(1);
+                  setSearchParams({});
+                }}
+              >
+                Toutes les catégories
+              </button>
+            )}
+
             <Link to="/admin/produits/nouveau" className="btn btn-navy btn-sm">
               Ajouter
               <IconPlus size={16} />
@@ -89,7 +107,11 @@ const AdminProducts = () => {
           <div className="panel-body">
             <div className="empty-state">
               <h3>Aucun produit</h3>
-              <p>Ajoutez votre premier produit au catalogue.</p>
+              <p>
+                {category
+                  ? `Aucun produit dans la catégorie ${category}.`
+                  : 'Ajoutez votre premier produit au catalogue.'}
+              </p>
             </div>
           </div>
         ) : (

@@ -37,7 +37,7 @@ const AdminCategories = () => {
             {categories.map((category) => (
               <Link
                 key={category.name}
-                to={`/admin/produits`}
+                to={`/admin/produits?category=${encodeURIComponent(category.name)}`}
                 className="category-card"
                 style={{ backgroundColor: '#fff' }}
               >
