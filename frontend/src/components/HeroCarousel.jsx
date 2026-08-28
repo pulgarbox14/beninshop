@@ -17,7 +17,7 @@ const slides = [
     title: 'Ordinateurs portables',
     highlight: 'pour tous les budgets',
     text: 'Des machines fiables pour le travail et les études, à partir de ',
-    textHighlight: '350 000 FCFA.',
+    textHighlight: '150 000 FCFA.',
     textEnd: 'Garantie et service après-vente inclus.',
     cta: 'Voir les ordinateurs',
     to: '/produits?category=Informatique',
