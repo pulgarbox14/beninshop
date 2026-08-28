@@ -490,12 +490,15 @@ textarea.form-control {
   display: block;
   aspect-ratio: 4 / 3;
   background-color: #fff;
-  padding: 12px;
+  overflow: hidden;
 }
 
+/* Image en position absolue : la vignette garde sa hauteur quel que soit le format */
 .product-thumb img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
   object-fit: contain;
 }
 

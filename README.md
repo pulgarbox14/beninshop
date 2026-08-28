@@ -253,24 +253,11 @@ et `youtube`, modifiables depuis le tableau de bord.
 ## Images des produits
 
 Le catalogue compte 24 produits répartis en 5 catégories (Informatique, Accessoires,
-Téléphonie, Impression, Réseau). Chaque produit attend une image dans
-`frontend/public/images/products/` :
+Téléphonie, Impression, Réseau). En attendant les vraies photos, le seed réutilise
+les visuels de la bannière (`frontend/public/images/imgban*.png`).
 
-```
-ordinateur-hp.png        disque-ssd.png          ecran-samsung.png
-pc-lenovo.png            unite-centrale-dell.png barrette-ram.png
-souris-logitech.png      clavier-gamer.png       casque-bluetooth.png
-webcam-hd.png            cle-usb.png             sacoche.png
-hub-usb-c.png            tapis-souris.png        smartphone-tecno.png
-ecouteurs-sans-fil.png   batterie-externe.png    chargeur-rapide.png
-chargeur-rapide.png      imprimante-hp.png       cartouche-encre.png
-papier-a4.png            routeur-wifi.png        repeteur-wifi.png
-cable-ethernet.png
-```
-
-Tant qu'une image est absente, la carte produit affiche un visuel neutre.
-Le chemin de l'image peut aussi être modifié produit par produit depuis le
-tableau de bord (champ « Image »).
+Pour mettre une vraie photo : tableau de bord → Produits → Modifier → bloc
+« Images du produit », soit en téléversant un fichier, soit en collant un lien.
 
 ---
 
