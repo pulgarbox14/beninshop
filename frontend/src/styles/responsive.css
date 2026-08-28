@@ -147,9 +147,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .stat-strip {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 /* En-tete compact : le libelle du bouton laisse la place a l'icone */
@@ -230,8 +227,7 @@
 
   .features,
   .stat-grid,
-  .footer-grid,
-  .stat-strip {
+  .footer-grid {
     grid-template-columns: 1fr;
   }
 
