@@ -27,6 +27,18 @@ const Checkout = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
+
+    // Meme regle que le serveur : numero beninois
+    if (!/^(?:\+229)?\s?0?[0-9]{8,10}$/.test(form.phone.replace(/[\s.-]/g, ''))) {
+      setError('Numéro de téléphone invalide (exemple : +229 01 23 45 67 89).');
+      return;
+    }
+
+    if (form.address.trim().length < 5) {
+      setError("Merci de préciser l'adresse de livraison.");
+      return;
+    }
+
     setLoading(true);
 
     try {

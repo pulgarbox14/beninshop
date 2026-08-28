@@ -2,6 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -12,6 +13,7 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const { handleWebhook } = require('./controllers/paymentController');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const { apiLimiter } = require('./middleware/securityMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,13 +27,15 @@ if (!process.env.JWT_SECRET) {
 connectDB();
 
 // Middlewares globaux
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
+app.use('/api', apiLimiter);
 
 // Le webhook PAYCORE a besoin du corps brut, avant express.json
 app.post('/api/payments/webhook', express.raw({ type: '*/*' }), handleWebhook);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '200kb' }));
+app.use(express.urlencoded({ extended: true, limit: '200kb' }));
 
 // Images televersees
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
