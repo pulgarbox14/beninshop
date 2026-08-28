@@ -18,6 +18,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import NotFound from './pages/NotFound';
 
 import Dashboard from './pages/admin/Dashboard';
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/connexion" element={<Login />} />
             <Route path="/inscription" element={<Register />} />
+            <Route path="/mot-de-passe/oublie" element={<ForgotPassword />} />
+            <Route path="/mot-de-passe/nouveau" element={<ResetPassword />} />
 
             {/* Routes connectees */}
             <Route element={<ProtectedRoute />}>

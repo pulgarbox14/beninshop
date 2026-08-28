@@ -31,6 +31,7 @@ le catalogue depuis un tableau de bord protégé par JWT.
 - Commande : formulaire de livraison, paiement en ligne et historique des commandes
 - Paiement Mobile Money ou carte bancaire via la passerelle PAYCORE
 - Inscription / connexion avec JWT
+- Mot de passe oublié : lien de réinitialisation envoyé par email (Resend)
 - Interface entièrement responsive (mobile, tablette, ordinateur)
 
 ### Administration (`/admin`, réservée au rôle `admin`)
@@ -114,6 +115,19 @@ et les 4 lignes à remplir vous-même.
 | `ADMIN_PASSWORD` | **à remplir** | Votre mot de passe (6 caractères minimum) |
 | `PAYCORE_SECRET_KEY` | facultatif | Clé secrète PAYCORE (`sk_live_…`) |
 | `PAYCORE_WEBHOOK_SECRET` | facultatif | Secret de signature des webhooks (`whsec_…`) |
+| `RESEND_API_KEY` | facultatif | Clé Resend pour l'envoi des emails (`re_…`) |
+| `MAIL_FROM` | facultatif | Expéditeur des emails |
+
+### Sécurité
+
+- Mots de passe hachés avec bcrypt, jamais renvoyés par l'API
+- JWT obligatoire sur les routes privées, rôle `admin` vérifié séparément
+- L'inscription publique crée toujours un compte `user` : un administrateur ne peut
+  être créé que par le seed
+- 10 tentatives par quart d'heure sur connexion, inscription et mot de passe oublié
+- En-têtes de sécurité (helmet), corps de requête limité à 200 ko
+- Jeton de réinitialisation stocké haché, valable 1 heure et utilisable une seule fois
+- Validation serveur : email, téléphone béninois, prix et stock positifs, adresse complète
 
 ### Paiement en ligne
 
@@ -197,6 +211,8 @@ Base : `http://localhost:5000/api`
 | POST | `/auth/login` | Public | Connexion, renvoie un JWT |
 | GET | `/auth/me` | JWT | Profil de l'utilisateur connecté |
 | PUT | `/auth/me` | JWT | Modifie son nom, son email ou son mot de passe |
+| POST | `/auth/forgot-password` | Public | Envoie le lien de réinitialisation |
+| POST | `/auth/reset-password` | Public | Applique le nouveau mot de passe |
 | GET | `/auth/users` | Admin | Liste des utilisateurs |
 
 ### Produits

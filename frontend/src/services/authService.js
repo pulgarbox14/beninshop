@@ -24,6 +24,18 @@ export const updateProfile = async (payload) => {
   return data;
 };
 
+// Demande de reinitialisation
+export const forgotPassword = async (email) => {
+  const { data } = await api.post('/auth/forgot-password', { email });
+  return data;
+};
+
+// Nouveau mot de passe depuis le lien recu par email
+export const resetPassword = async (payload) => {
+  const { data } = await api.post('/auth/reset-password', payload);
+  return data;
+};
+
 // Utilisateurs (admin)
 export const fetchUsers = async () => {
   const { data } = await api.get('/auth/users');

@@ -74,6 +74,12 @@ const Login = () => {
               />
             </div>
 
+            <p style={{ textAlign: 'right', marginBottom: 16 }}>
+              <Link to="/mot-de-passe/oublie" className="form-hint">
+                Mot de passe oublié ?
+              </Link>
+            </p>
+
             <button type="submit" className="btn btn-navy btn-block" disabled={loading}>
               {loading ? 'Connexion en cours...' : 'Connexion'}
             </button>

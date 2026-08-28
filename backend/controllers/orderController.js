@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/asyncHandler');
+const { estTelephone, texteRequis } = require('../utils/validation');
 
 // POST /api/orders
 const createOrder = asyncHandler(async (req, res) => {
@@ -9,6 +10,26 @@ const createOrder = asyncHandler(async (req, res) => {
   if (!Array.isArray(items) || items.length === 0) {
     res.status(400);
     throw new Error('Le panier est vide');
+  }
+
+  if (items.length > 50) {
+    res.status(400);
+    throw new Error('Le panier contient trop d\'articles');
+  }
+
+  if (!texteRequis(shippingAddress?.fullName, 2)) {
+    res.status(400);
+    throw new Error('Le nom du destinataire est obligatoire');
+  }
+
+  if (!estTelephone(shippingAddress?.phone)) {
+    res.status(400);
+    throw new Error('Numéro de téléphone invalide (exemple : +229 01 23 45 67 89)');
+  }
+
+  if (!texteRequis(shippingAddress?.city, 2) || !texteRequis(shippingAddress?.address, 5)) {
+    res.status(400);
+    throw new Error('La ville et l\'adresse de livraison sont obligatoires');
   }
 
 // On relit les prix en base

@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const asyncHandler = require('../middleware/asyncHandler');
+const { echapperRegex, estNombrePositif, texteRequis } = require('../utils/validation');
 
 // GET /api/products
 const getProducts = asyncHandler(async (req, res) => {
@@ -8,14 +9,15 @@ const getProducts = asyncHandler(async (req, res) => {
   const filter = {};
 
   if (search) {
+    const terme = echapperRegex(String(search).slice(0, 80));
     filter.$or = [
-      { name: { $regex: search, $options: 'i' } },
-      { description: { $regex: search, $options: 'i' } },
+      { name: { $regex: terme, $options: 'i' } },
+      { description: { $regex: terme, $options: 'i' } },
     ];
   }
 
   if (category && category !== 'Toutes') {
-    filter.category = category;
+    filter.category = String(category);
   }
 
   if (featured === 'true') {
@@ -65,7 +67,17 @@ const getProductById = asyncHandler(async (req, res) => {
 const createProduct = asyncHandler(async (req, res) => {
   const { name, description, price, image, images, category, stock, featured } = req.body;
 
-  const galerie = Array.isArray(images) ? images.filter(Boolean) : [];
+  if (!texteRequis(name, 2) || !texteRequis(description, 10) || !texteRequis(category, 2)) {
+    res.status(400);
+    throw new Error('Nom, description et catégorie sont obligatoires');
+  }
+
+  if (!estNombrePositif(price) || !estNombrePositif(stock)) {
+    res.status(400);
+    throw new Error('Le prix et le stock doivent être des nombres positifs');
+  }
+
+  const galerie = Array.isArray(images) ? images.filter(Boolean).slice(0, 6) : [];
 
   const product = new Product({
     name,
@@ -99,8 +111,18 @@ const updateProduct = asyncHandler(async (req, res) => {
     }
   });
 
+  if (req.body.price !== undefined && !estNombrePositif(req.body.price)) {
+    res.status(400);
+    throw new Error('Le prix doit être un nombre positif');
+  }
+
+  if (req.body.stock !== undefined && !estNombrePositif(req.body.stock)) {
+    res.status(400);
+    throw new Error('Le stock doit être un nombre positif');
+  }
+
   if (Array.isArray(req.body.images)) {
-    product.images = req.body.images.filter(Boolean);
+    product.images = req.body.images.filter(Boolean).slice(0, 6);
   }
 
   const updated = await product.save();
