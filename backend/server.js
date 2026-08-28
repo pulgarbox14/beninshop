@@ -9,6 +9,8 @@ const orderRoutes = require('./routes/orderRoutes');
 const statsRoutes = require('./routes/statsRoutes');
 const settingRoutes = require('./routes/settingRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const { handleWebhook } = require('./controllers/paymentController');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -24,6 +26,10 @@ connectDB();
 
 // Middlewares globaux
 app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
+
+// Le webhook PAYCORE a besoin du corps brut, avant express.json
+app.post('/api/payments/webhook', express.raw({ type: '*/*' }), handleWebhook);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,6 +48,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/settings', settingRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Gestion des erreurs
 app.use(notFound);

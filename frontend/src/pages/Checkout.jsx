@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { createOrder } from '../services/orderService';
+import { createCheckout } from '../services/paymentService';
 import { formatPrice } from '../utils';
 import Alert from '../components/Alert';
 
@@ -29,15 +30,24 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      await createOrder({
+      const order = await createOrder({
         items: items.map((item) => ({ product: item._id, quantity: item.quantity })),
         shippingAddress: form,
       });
       clearCart();
-      navigate('/mes-commandes', { replace: true });
+
+      // Paiement en ligne : redirection vers PAYCORE
+      try {
+        const { checkoutUrl } = await createCheckout(order._id);
+        window.location.href = checkoutUrl;
+      } catch (err) {
+        navigate(`/paiement/annule?order=${order._id}`, {
+          replace: true,
+          state: { message: err.message },
+        });
+      }
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -130,8 +140,12 @@ const Checkout = () => {
             </div>
 
             <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-              {loading ? 'Enregistrement...' : 'Confirmer la commande'}
+              {loading ? 'Redirection vers le paiement...' : 'Payer ma commande'}
             </button>
+
+            <p className="form-hint text-center" style={{ marginTop: 12 }}>
+              Paiement sécurisé par PAYCORE : Mobile Money ou carte bancaire.
+            </p>
           </form>
         </section>
 

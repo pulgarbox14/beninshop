@@ -28,7 +28,8 @@ le catalogue depuis un tableau de bord protégé par JWT.
 - Catalogue : recherche, filtre par catégorie, tri et pagination
 - Fiche produit : image, description, prix, catégorie, stock, ajout au panier
 - Panier : quantités, suppression d'une ligne, vidage complet, total
-- Commande : formulaire de livraison et historique des commandes
+- Commande : formulaire de livraison, paiement en ligne et historique des commandes
+- Paiement Mobile Money ou carte bancaire via la passerelle PAYCORE
 - Inscription / connexion avec JWT
 - Interface entièrement responsive (mobile, tablette, ordinateur)
 
@@ -111,6 +112,20 @@ et les 4 lignes à remplir vous-même.
 | `ADMIN_NAME` | **à remplir** | Votre nom d'administrateur |
 | `ADMIN_EMAIL` | **à remplir** | Votre email de connexion au tableau de bord |
 | `ADMIN_PASSWORD` | **à remplir** | Votre mot de passe (6 caractères minimum) |
+| `PAYCORE_SECRET_KEY` | facultatif | Clé secrète PAYCORE (`sk_live_…`) |
+| `PAYCORE_WEBHOOK_SECRET` | facultatif | Secret de signature des webhooks (`whsec_…`) |
+
+### Paiement en ligne
+
+Le règlement passe par **PAYCORE** (Mobile Money et carte bancaire) :
+
+1. La commande est enregistrée avec le statut `en attente`.
+2. `POST /api/payments/checkout` crée le paiement et redirige le client vers PAYCORE.
+3. Au retour, `/paiement/merci` interroge l'API et passe la commande en `payée`.
+4. En parallèle, le webhook `payment.succeeded` fait la même mise à jour côté serveur.
+
+Sans `PAYCORE_SECRET_KEY`, la commande est quand même enregistrée : le client peut
+la régler plus tard depuis « Mes commandes ».
 
 Aucun identifiant n'est écrit dans le code : le serveur refuse de démarrer sans
 `JWT_SECRET` et le seed s'arrête si une variable de compte manque.
@@ -205,6 +220,9 @@ Base : `http://localhost:5000/api`
 | GET | `/orders` | Admin | Toutes les commandes |
 | PUT | `/orders/:id` | Admin | Change le statut d'une commande |
 | GET | `/stats` | Admin | Statistiques du tableau de bord |
+| POST | `/payments/checkout` | JWT | Crée le paiement PAYCORE et renvoie l'URL de checkout |
+| GET | `/payments/:orderId` | JWT | Vérifie le statut du paiement auprès de PAYCORE |
+| POST | `/payments/webhook` | PAYCORE | Notification signée (HMAC SHA-256) |
 | GET | `/settings` | Public | Liens des réseaux sociaux |
 | PUT | `/settings` | Admin | Modifie les liens des réseaux sociaux |
 
